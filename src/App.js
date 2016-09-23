@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import lodash from 'lodash';
 
 const App = React.createClass({
     getInitialState() {

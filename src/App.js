@@ -94,7 +94,7 @@ const App = React.createClass({
     generateTableRow(action) {
         return (
             <tr>
-                <td>{capitalize(action)}</td>
+                <td>{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
                 <td>
                     {this.state.home[action]}
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>

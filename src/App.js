@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PercentageBar from './percentage-bar';
-import { merge, capitalize, reduce } from 'lodash';
+import { merge, reduce } from 'lodash';
 
 const App = React.createClass({
     getInitialState() {

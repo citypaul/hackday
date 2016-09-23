@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PercentageBar from './percentage-bar';
 import { merge, capitalize } from 'lodash';
 
 const App = React.createClass({
@@ -58,7 +59,6 @@ const App = React.createClass({
             this.setState(newState);
         }
     },
-
     changeWeightValue(action, value) {
         const currentValue = this.state.weights[action];
         const newValue = currentValue + value;
@@ -73,25 +73,24 @@ const App = React.createClass({
     handleChange(event) {
         this.setState({value: event.target.value});
     },
-
     generateTableRow(action) {
         return (
             <tr>
                 <td>{capitalize(action)}</td>
                 <td>
                     {this.state.home[action]}
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
                 </td>
                 <td>
                     {this.state.away[action]}
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
                 </td>
                 <td>
                     {this.state.weights[action]}
-                    <button type="button" form="my_form" onClick={this.changeWeightValue.bind(this, action, 1)}>UP</button>
-                    <button type="button" form="my_form" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
+                    <button type="button" onClick={this.changeWeightValue.bind(this, action, 1)}>UP</button>
+                    <button type="button" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
                 </td>
             </tr>
         );
@@ -128,6 +127,9 @@ const App = React.createClass({
                     </thead>
                     {this.generateTableBody()}
                 </table>
+                <div>
+                    <PercentageBar heading={"Pressure"} percentage={true} leftValue= {54.25} rightValue= {45.75} />
+                </div>
             </div>
         );
     }

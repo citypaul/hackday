@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PercentageBar from './percentage-bar';
-import { merge, capitalize } from 'lodash';
+import { merge, capitalize, reduce } from 'lodash';
 
 const App = React.createClass({
     getInitialState() {
@@ -61,7 +61,11 @@ const App = React.createClass({
             let updatedTeamActionValue = { [team]: { [action]: newValue }};
             let newState = merge({}, this.state, updatedTeamActionValue);
             this.setState(newState);
-            this.calculatePressure(newState);
+            let total = this.calculatePressure(newState);
+            let updatedHomeTeamTotal = { totals: {home: total} };
+
+            let evenNewerState = merge({}, newState, updatedHomeTeamTotal);
+            this.setState(evenNewerState);
         }
     },
     changeWeightValue(action, value) {
@@ -77,18 +81,9 @@ const App = React.createClass({
     },
 
     calculatePressure(newState) {
-        let total = 0;
-        console.log('xxxx');
-        console.log('keys: ', Object.keys(newState.weights));
-        Object.keys(newState.home).forEach(function(key){
-            const value = newState.home[key];
-            console.log('value: ', value);
-            console.log('smeg: ', Object.keys(newState.weights[key]));
-
-            total += (value * Object.keys(newState.weights[key]));
-            console.log('total: ', total);
-        }.bind(this));
-        this.setState({totals: {home:  total}});
+        return reduce(newState.home, function(result, v, k) {
+            return result + v * newState.weights[k];
+        }, 0);
     },
 
     generateTableRow(action) {

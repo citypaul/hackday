@@ -8,15 +8,42 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 50
+                possession: 50,
+                shotsOnTarget: 0,
+                shotsOffTarget: 0,
+                fouls: 0,
+                redCards: 0,
+                penalties: 0,
+                corners: 0,
+                crosses: 0,
+                passCompletions: 0,
+                freeKicks: 0
             },
             away: {
                 goals: 0,
-                possession: 50
+                possession: 50,
+                shotsOnTarget: 0,
+                shotsOffTarget: 0,
+                fouls: 0,
+                redCards: 0,
+                penalties: 0,
+                corners: 0,
+                crosses: 0,
+                passCompletions: 0,
+                freeKicks: 0
             },
             weights: {
                 goals: 10,
-                possession: 1
+                possession: 1,
+                shotsOnTarget: 1,
+                shotsOffTarget: 1,
+                fouls: 2,
+                redCards: 3,
+                penalties: 4,
+                corners: 3,
+                crosses: 2,
+                passCompletions: 1,
+                freeKicks: 1
             }
         };
     },

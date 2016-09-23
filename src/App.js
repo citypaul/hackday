@@ -14,11 +14,12 @@ const App = React.createClass({
     },
 
     increaseGoalCount(team) {
-        let currentValue = this.state.goal[team];
+        const currentValue = this.state.goal[team];
+        const newValue = currentValue + 1;
 
         this.setState({
             goal: {
-                home: currentValue++
+                home: newValue
             }
         });
     },
@@ -46,8 +47,8 @@ const App = React.createClass({
                             <td>Goal</td>
                             <td>
                                 {this.state.goal.home}
-                                <button type="button" form="my_form" onClick={this.increaseGoalCount('home')}>UP</button>
-                                <button type="button" form="my_form" onClick={this.increaseGoalCount('home')}>Down</button>
+                                <button type="button" form="my_form" onClick={this.increaseGoalCount.bind(this, 'home')}>UP</button>
+                                <button type="button" form="my_form" onClick={this.increaseGoalCount.bind(this, 'home')}>Down</button>
                             </td>
                             <td>
                                 {this.state.goal.away}

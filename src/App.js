@@ -59,11 +59,7 @@ const App = React.createClass({
             this.setState(newState);
         }
     },
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    },
-
+    
     generateTableRow(action) {
         return (
             <tr>
@@ -118,12 +114,6 @@ const App = React.createClass({
                     </thead>
                     {this.generateTableBody()}
                 </table>
-
-                <input
-                    type="text"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    />
                 <div>
                     <PercentageBar heading= {"Pressure"} percentage={false} leftValue= {54.25} rightValue= {45.75} />
                 </div>

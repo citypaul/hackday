@@ -5,23 +5,27 @@ import './App.css';
 const App = React.createClass({
     getInitialState() {
         return {
-            goal: {
-                home: 0,
-                away: 0,
-                points: 0
+            home: {
+                goals: 0
+            },
+            away: {
+                goals: 0
+            },
+            weights: {
+                goals: 10
             }
         };
     },
 
     changeActionValueForTeam(action, team, value) {
-        const currentValue = this.state[action][team];
+        const currentValue = this.state[team][action];
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
             this.setState(
                 {
-                    [action]: {
-                        [team]: newValue
+                    [team]: {
+                        [action]: newValue
                     }
                 }
             )
@@ -50,17 +54,17 @@ const App = React.createClass({
                         <tr>
                             <td>Goal</td>
                             <td>
-                                {this.state.goal.home}
-                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goal', 'home', 1)}>UP</button>
-                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goal', 'home', -1)}>Down</button>
+                                {this.state.home.goals}
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goals', 'home', 1)}>UP</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goals', 'home', -1)}>Down</button>
                             </td>
                             <td>
-                                {this.state.goal.away}
+                                {this.state.away.goals}
                                 <button type="button" form="my_form">UP</button>
                                 <button type="button" form="my_form">Down</button>
                             </td>
                             <td>
-                                {this.state.goal.points}
+                                {this.state.weights.goals}
                                 <button type="button" form="my_form">UP</button>
                                 <button type="button" form="my_form">Down</button>
                             </td>

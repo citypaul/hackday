@@ -13,15 +13,19 @@ const App = React.createClass({
         };
     },
 
-    increaseGoalCount(team) {
-        const currentValue = this.state.goal[team];
-        const newValue = currentValue + 1;
+    changeActionValueForTeam(action, team, value) {
+        const currentValue = this.state[action][team];
+        const newValue = currentValue + value;
 
-        this.setState({
-            goal: {
-                home: newValue
-            }
-        });
+        if (newValue >= 0) {
+            this.setState(
+                {
+                    [action]: {
+                        [team]: newValue
+                    }
+                }
+            )
+        }
     },
 
     handleChange(event) {
@@ -47,8 +51,8 @@ const App = React.createClass({
                             <td>Goal</td>
                             <td>
                                 {this.state.goal.home}
-                                <button type="button" form="my_form" onClick={this.increaseGoalCount.bind(this, 'home')}>UP</button>
-                                <button type="button" form="my_form" onClick={this.increaseGoalCount.bind(this, 'home')}>Down</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goal', 'home', 1)}>UP</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goal', 'home', -1)}>Down</button>
                             </td>
                             <td>
                                 {this.state.goal.away}

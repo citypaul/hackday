@@ -45,6 +45,10 @@ const App = React.createClass({
                 crosses: 2,
                 passCompletions: 1,
                 freeKicks: 1
+            },
+            totals: {
+                home: 50,
+                away: 50
             }
         };
     },
@@ -57,6 +61,7 @@ const App = React.createClass({
             let updatedTeamActionValue = { [team]: { [action]: newValue }};
             let newState = merge({}, this.state, updatedTeamActionValue);
             this.setState(newState);
+            this.calculatePressure(newState);
         }
     },
     changeWeightValue(action, value) {
@@ -67,12 +72,25 @@ const App = React.createClass({
             let updatedWeightValue = { weights: {[action]: newValue }};
             let newState = merge({}, this.state, updatedWeightValue);
             this.setState(newState);
+            this.calculatePressure(newState);
         }
     },
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
+    calculatePressure(newState) {
+        let total = 0;
+        console.log('xxxx');
+        console.log('keys: ', Object.keys(newState.weights));
+        Object.keys(newState.home).forEach(function(key){
+            const value = newState.home[key];
+            console.log('value: ', value);
+            console.log('smeg: ', Object.keys(newState.weights[key]));
+
+            total += (value * Object.keys(newState.weights[key]));
+            console.log('total: ', total);
+        }.bind(this));
+        this.setState({totals: {home:  total}});
     },
+
     generateTableRow(action) {
         return (
             <tr>
@@ -128,7 +146,7 @@ const App = React.createClass({
                     {this.generateTableBody()}
                 </table>
                 <div>
-                    <PercentageBar heading={"Pressure"} percentage={true} leftValue= {54.25} rightValue= {45.75} />
+                    <PercentageBar leftLabel={this.state.totals.home} rightLabel={"Away Team"} heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {45.75} />
                 </div>
             </div>
         );

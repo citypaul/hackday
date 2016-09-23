@@ -59,6 +59,17 @@ const App = React.createClass({
         }
     },
 
+    changeWeightValue(action, value) {
+        const currentValue = this.state.weights[action];
+        const newValue = currentValue + value;
+
+        if (newValue >= 0) {
+            let updatedWeightValue = { weights: {[action]: newValue }};
+            let newState = merge({}, this.state, updatedWeightValue);
+            this.setState(newState);
+        }
+    },
+
     handleChange(event) {
         this.setState({value: event.target.value});
     },
@@ -78,9 +89,9 @@ const App = React.createClass({
                     <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
                 </td>
                 <td>
-                    {this.state.weights.goals}
-                    <button type="button" form="my_form">UP</button>
-                    <button type="button" form="my_form">Down</button>
+                    {this.state.weights[action]}
+                    <button type="button" form="my_form" onClick={this.changeWeightValue.bind(this, action, 1)}>UP</button>
+                    <button type="button" form="my_form" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
                 </td>
             </tr>
         );
@@ -112,7 +123,7 @@ const App = React.createClass({
                             <th>Event</th>
                             <th>Home</th>
                             <th>Away</th>
-                            <th>Points</th>
+                            <th>Weights</th>
                         </tr>
                     </thead>
                     {this.generateTableBody()}

@@ -59,25 +59,25 @@ const App = React.createClass({
             this.setState(newState);
         }
     },
-    
+
     generateTableRow(action) {
         return (
             <tr>
                 <td>{capitalize(action)}</td>
                 <td>
                     {this.state.home[action]}
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
                 </td>
                 <td>
                     {this.state.away[action]}
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
-                    <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
                 </td>
                 <td>
                     {this.state.weights.goals}
-                    <button type="button" form="my_form">UP</button>
-                    <button type="button" form="my_form">Down</button>
+                    <button type="button">UP</button>
+                    <button type="button">Down</button>
                 </td>
             </tr>
         );
@@ -115,7 +115,7 @@ const App = React.createClass({
                     {this.generateTableBody()}
                 </table>
                 <div>
-                    <PercentageBar heading= {"Pressure"} percentage={false} leftValue= {54.25} rightValue= {45.75} />
+                    <PercentageBar heading={"Pressure"} percentage={true} leftValue= {54.25} rightValue= {45.75} />
                 </div>
             </div>
         );

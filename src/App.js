@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import lodash from 'lodash';
+import { merge } from 'lodash';
 
 const App = React.createClass({
     getInitialState() {
@@ -27,7 +27,7 @@ const App = React.createClass({
 
         if (newValue >= 0) {
             let updatedTeamActionValue = { [team]: { [action]: newValue }};
-            let newState = _.merge({}, this.state, updatedTeamActionValue);
+            let newState = merge({}, this.state, updatedTeamActionValue);
             this.setState(newState);
         }
     },

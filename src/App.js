@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { merge } from 'lodash';
+import PercentageBar from './percentage-bar';
 
 const App = React.createClass({
     getInitialState() {
@@ -123,6 +124,9 @@ const App = React.createClass({
                     value={this.state.value}
                     onChange={this.handleChange}
                     />
+                <div>
+                    <PercentageBar heading= {"Pressure"} percentage={false} leftValue= {54.25} rightValue= {45.75} />
+                </div>
             </div>
         );
     }

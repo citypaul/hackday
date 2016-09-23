@@ -6,13 +6,16 @@ const App = React.createClass({
     getInitialState() {
         return {
             home: {
-                goals: 0
+                goals: 0,
+                possession: 50
             },
             away: {
-                goals: 0
+                goals: 0,
+                possession: 50
             },
             weights: {
-                goals: 10
+                goals: 10,
+                possession: 1
             }
         };
     },
@@ -52,7 +55,7 @@ const App = React.createClass({
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Goal</td>
+                            <td>Goals</td>
                             <td>
                                 {this.state.home.goals}
                                 <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goals', 'home', 1)}>UP</button>
@@ -60,8 +63,8 @@ const App = React.createClass({
                             </td>
                             <td>
                                 {this.state.away.goals}
-                                <button type="button" form="my_form">UP</button>
-                                <button type="button" form="my_form">Down</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goals', 'away', 1)}>UP</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'goals', 'away', -1)}>Down</button>
                             </td>
                             <td>
                                 {this.state.weights.goals}
@@ -69,6 +72,25 @@ const App = React.createClass({
                                 <button type="button" form="my_form">Down</button>
                             </td>
                         </tr>
+                        <tr>
+                            <td>Possession</td>
+                            <td>
+                                {this.state.home.possession}
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'possession', 'home', 1)}>UP</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'possession', 'home', -1)}>Down</button>
+                            </td>
+                            <td>
+                                {this.state.away.possession}
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'possession', 'away', 1)}>UP</button>
+                                <button type="button" form="my_form" onClick={this.changeActionValueForTeam.bind(this, 'possession', 'away', -1)}>Down</button>
+                            </td>
+                            <td>
+                                {this.state.weights.goals}
+                                <button type="button" form="my_form">UP</button>
+                                <button type="button" form="my_form">Down</button>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
 

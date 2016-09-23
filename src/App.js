@@ -26,13 +26,9 @@ const App = React.createClass({
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
-            this.setState(
-                {
-                    [team]: {
-                        [action]: newValue
-                    }
-                }
-            )
+            let updatedTeamActionValue = { [team]: { [action]: newValue }};
+            let newState = _.merge({}, this.state, updatedTeamActionValue);
+            this.setState(newState);
         }
     },
 

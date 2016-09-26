@@ -141,7 +141,7 @@ const App = React.createClass({
                     {this.generateTableBody()}
                 </table>
                 <div>
-                    <PercentageBar leftLabel={this.state.totals.home} rightLabel={"Away Team"} heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {45.75} />
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
                 </div>
             </div>
         );

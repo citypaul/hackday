@@ -56,7 +56,7 @@ const App = React.createClass({
             }
         };
     },
-
+    //TODO: special calculation for possession, making sure it is 100%
     changeActionValueForTeam(action, team, value) {
         const currentValue = this.state[team][action];
         const newValue = currentValue + value;
@@ -64,22 +64,20 @@ const App = React.createClass({
         if (newValue >= 0) {
             const updatedTeamActionValue = { [team]: { [action]: newValue }};
             const pressure = this.calculatePressure(updatedTeamActionValue, team);
-
             let homePressure, awayPressure;
+
             if (team === 'home') {
-                console.log('home pressure' + pressure + 'away pressure' + this.state.totals['away'])
                 homePressure = pressure;
                 awayPressure = this.state.points['away'];
-
             } else {
                 homePressure = this.state.points['home'];
                 awayPressure = pressure;
             }
-            console.log(homePressure, awayPressure)
+
             let totalPressure = homePressure + awayPressure;
             let homePerc = 100 * homePressure/totalPressure;
             let awayPerc = 100 * awayPressure/totalPressure;
-            let updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
+            const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
             this.setState(newState);

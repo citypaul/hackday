@@ -9,7 +9,7 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 0,
+                possession: 50,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -22,7 +22,7 @@ const App = React.createClass({
             },
             away: {
                 goals: 0,
-                possession: 0,
+                possession: 50,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,

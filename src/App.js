@@ -9,7 +9,7 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 0/*,
+                possession: 0,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -17,13 +17,12 @@ const App = React.createClass({
                 penalties: 0,
                 corners: 0,
                 crosses: 0,
-                passCompletions: 0,
-                freeKicks: 0*/
+                //passCompletions: 0,
+                freeKicks: 0
             },
             away: {
                 goals: 0,
-                possession: 0
-                /*,
+                possession: 0,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -31,21 +30,21 @@ const App = React.createClass({
                 penalties: 0,
                 corners: 0,
                 crosses: 0,
-                passCompletions: 0,
-                freeKicks: 0*/
+                //passCompletions: 0,
+                freeKicks: 0
             },
             weights: {
                 goals: 10,
-                possession: 5/*,
-                shotsOnTarget: 1,
-                shotsOffTarget: 1,
-                fouls: 2,
-                redCards: 3,
-                penalties: 4,
-                corners: 3,
-                crosses: 2,
-                passCompletions: 1,
-                freeKicks: 1*/
+                possession: 1,
+                shotsOnTarget: 4,
+                shotsOffTarget: 2,
+                fouls: -1, // should we get rid of those? we already have freeKicks
+                redCards: -10, // yellow card?
+                penalties: 3,
+                corners: 2,
+                crosses: 1,
+                //passCompletions: 1, percentage, like possession, but cumulative
+                freeKicks: 1
             },
             points: {
                 home: 0,
@@ -67,7 +66,6 @@ const App = React.createClass({
             const pressure = this.calculatePressure(updatedTeamActionValue, team);
 
             let homePressure, awayPressure;
-            console.log(team==='home')
             if (team === 'home') {
                 console.log('home pressure' + pressure + 'away pressure' + this.state.totals['away'])
                 homePressure = pressure;
@@ -84,7 +82,6 @@ const App = React.createClass({
             let updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
-            console.log(newState)
             this.setState(newState);
         }
     },

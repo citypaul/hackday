@@ -9,7 +9,7 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 50,
+                possession: 0/*,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -18,11 +18,12 @@ const App = React.createClass({
                 corners: 0,
                 crosses: 0,
                 passCompletions: 0,
-                freeKicks: 0
+                freeKicks: 0*/
             },
             away: {
                 goals: 0,
-                possession: 50,
+                possession: 0
+                /*,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -31,11 +32,11 @@ const App = React.createClass({
                 corners: 0,
                 crosses: 0,
                 passCompletions: 0,
-                freeKicks: 0
+                freeKicks: 0*/
             },
             weights: {
                 goals: 10,
-                possession: 1,
+                possession: 5/*,
                 shotsOnTarget: 1,
                 shotsOffTarget: 1,
                 fouls: 2,
@@ -44,11 +45,15 @@ const App = React.createClass({
                 corners: 3,
                 crosses: 2,
                 passCompletions: 1,
-                freeKicks: 1
+                freeKicks: 1*/
+            },
+            points: {
+                home: 0,
+                away: 0
             },
             totals: {
-                home: 50,
-                away: 50
+                home: 0,
+                away: 0
             }
         };
     },
@@ -60,12 +65,30 @@ const App = React.createClass({
         if (newValue >= 0) {
             const updatedTeamActionValue = { [team]: { [action]: newValue }};
             const pressure = this.calculatePressure(updatedTeamActionValue, team);
-            const updatedTeamPressure = { totals: { [team] : pressure} };
+
+            let homePressure, awayPressure;
+            console.log(team==='home')
+            if (team === 'home') {
+                console.log('home pressure' + pressure + 'away pressure' + this.state.totals['away'])
+                homePressure = pressure;
+                awayPressure = this.state.points['away'];
+
+            } else {
+                homePressure = this.state.points['home'];
+                awayPressure = pressure;
+            }
+            console.log(homePressure, awayPressure)
+            let totalPressure = homePressure + awayPressure;
+            let homePerc = 100 * homePressure/totalPressure;
+            let awayPerc = 100 * awayPressure/totalPressure;
+            let updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
+            console.log(newState)
             this.setState(newState);
         }
     },
+
     changeWeightValue(action, value) {
         const currentValue = this.state.weights[action];
         const newValue = currentValue + value;

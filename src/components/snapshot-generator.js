@@ -149,8 +149,6 @@ const SnapshotGenerator = React.createClass({
     },
 
     render() {
-        console.log('generator state', this.state);
-        console.log('generator props', this.props);
         return (
             <div>
                 <div>

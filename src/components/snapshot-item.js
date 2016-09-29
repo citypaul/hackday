@@ -15,7 +15,7 @@ const ScenarioItem = React.createClass({
         return (
             <div>
                 <div><pre>{JSON.stringify(this.state.snapshot, null, 2) }</pre></div>
-                <button type="button" onClick={this.loadSnapshot}>LOAD Moment</button>
+                <button type="button" onClick={this.loadSnapshot}>Load Snapshot</button>
             </div>
         );
     }

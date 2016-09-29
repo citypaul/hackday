@@ -60,8 +60,7 @@ const App = React.createClass({
                 home: 50,
                 away: 50
             },
-            scenarioName: "unset",
-            scenarioFileIndex: 0
+            scenarioName: "unset"
         };
     },
 
@@ -86,22 +85,36 @@ const App = React.createClass({
         this.loadScenario(event.target.value);
     },
 
+    saveSnapshot() {
+        var path = '/scenarios/' + this.state.scenarioName;
+        jquery.ajax({
+            url: 'http://localhost:3001' + path,
+            type: 'POST',
+            data: JSON.stringify(this.state.generatorModel),
+            contentType: 'application/json',
+            error: function(xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+        });
+        this.loadScenario(this.state.scenarioName);
+    },
+
+    updateGeneratorModel(updatedModel) {
+        this.setState({
+            generatorModel: updatedModel
+        })
+    },
+
     render() {
-        /*
-         original save button:
-         <div>
-         <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
-         <label>Scenario:</label>
-         <input type="text" onBlur={this.setScenarioName}/>
-         </div>
-         */
         return (
             <div>
-                <ScenarioGenerator scenario={this.state.generatorModel}/>
+                <ScenarioGenerator scenario={this.state.generatorModel} onUpdate={this.updateGeneratorModel}/>
                 <div>
                     <label>Scenario:</label>
                     <input type="text" value={this.state.scenarioName} onChange={this.updateScenarioName}/>
                 </div>
+                <button type="button" onClick={this.saveSnapshot}>SAVE SNAPSHOT</button>
+
                 <ScenarioList scenarios={this.state.scenarios}/>
             </div>
         );

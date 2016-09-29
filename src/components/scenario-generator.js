@@ -9,6 +9,10 @@ const ScenarioGenerator = React.createClass({
         return this.props.scenario;
     },
 
+    componentWillUpdate(nextProps, nextState) {
+        //this.props.onUpdate(nextState);
+    },
+
     getAnotherTeam(teamName) {
         return (teamName === 'home') ? 'away' : 'home';
     },
@@ -41,6 +45,7 @@ const ScenarioGenerator = React.createClass({
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
             this.setState(newState);
+            this.props.onUpdate(newState);
         }
     },
 
@@ -67,6 +72,7 @@ const ScenarioGenerator = React.createClass({
 
             const newState = merge({}, this.state, updatedState, updatedTeamPressure);
             this.setState(newState);
+            this.props.onUpdate(newState);
         }
     },
 
@@ -142,26 +148,6 @@ const ScenarioGenerator = React.createClass({
             {this.generateTableRow('divingSaves')}
             </tbody>
         );
-    },
-
-    saveCurrentStateToFile() {
-        var path = '/scenarios/' + this.state.scenarioName + '/' + this.state.scenarioFileIndex;
-        console.log('Posting to: ', path);
-        $.ajax({
-            url: 'http://localhost:3001' + path,
-            type: 'POST',
-            data: JSON.stringify(this.state),
-            contentType: 'application/json',
-            error: function(xhr, status, err) {
-                console.log(status, err.toString());
-            }.bind(this)
-        });
-        this.setState({scenarioFileIndex: this.state.scenarioFileIndex + 1});
-    },
-
-    setScenarioName(event) {
-        let newState = merge({}, this.state, {scenarioName: event.target.value});
-        this.setState(newState);
     },
 
     render() {

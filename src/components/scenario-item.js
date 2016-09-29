@@ -6,7 +6,7 @@ const ScenarioItem = React.createClass({
 
         return (
             <div>
-                <p>{scenario.home.goals}</p>
+                <div><pre>{JSON.stringify(scenario, null, 2) }</pre></div>
                 <button type="button" onClick={this.loadScenario}>LOAD Moment</button>
             </div>
         );

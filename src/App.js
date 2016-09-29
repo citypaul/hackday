@@ -9,7 +9,7 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 0,
+                possession: 50,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -22,7 +22,7 @@ const App = React.createClass({
             },
             away: {
                 goals: 0,
-                possession: 0,
+                possession: 50,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -56,22 +56,32 @@ const App = React.createClass({
             }
         };
     },
-    //TODO: special calculation for possession, making sure it is 100%
+
+    getAnotherTeam(teamName) {
+        return (teamName === 'home') ? 'away' : 'home';
+    },
+
     changeActionValueForTeam(action, team, value) {
         const currentValue = this.state[team][action];
         const newValue = currentValue + value;
+
         if (newValue >= 0) {
-            const updatedTeamActionValue = { [team]: { [action]: newValue }};
-            const updatedState = merge({}, this.state, updatedTeamActionValue);
-            const pressure = this.calculatePressure(updatedState, team);
+            let updatedTeamActionValue = { [team]: { [action]: newValue }};
+            if (action === 'possession') {
+                let anotherTeamValue = 100 - newValue;
+                updatedTeamActionValue = { [team]: { [action]: newValue }, [this.getAnotherTeam(team)]: { [action]: anotherTeamValue } };
+            }
+
+            const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
+            const pressure = this.calculatePressure(stateUpdatedWithActionValue, team);
 
             let homePressure, awayPressure;
 
             if (team === 'home') {
                 homePressure = pressure;
-                awayPressure = this.state.points['away'];
+                awayPressure = (action === 'possession') ?  this.calculatePressure(stateUpdatedWithActionValue, 'away') : this.state.points['away'];
             } else {
-                homePressure = this.state.points['home'];
+                homePressure = (action === 'possession') ?  this.calculatePressure(stateUpdatedWithActionValue, 'home') : this.state.points['home'];
                 awayPressure = pressure;
             }
             console.log(homePressure, awayPressure);
@@ -103,6 +113,7 @@ const App = React.createClass({
         console.log(updatedState)
 
         return reduce(updatedState[team], function(result, v, k) {
+            console.log(v + ' multiplied by ' + weights[k])
             return result + v * weights[k];
         }, 0);
     },

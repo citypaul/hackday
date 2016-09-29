@@ -3,7 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import PercentageBar from './percentage-bar';
 import { merge, reduce } from 'lodash';
-var request = require('request');
+//var request = require('request');
+var $ = require('jquery');
 
 const App = React.createClass({
     getInitialTeamModel() {
@@ -172,11 +173,23 @@ const App = React.createClass({
 
     saveCurrentStateToFile() {
         var path = '/scenarios/ ' + this.state.scenarioName;
-        request({
-            method: "POST",
-            uri: "http://localhost:3005" + path,
-            json: this.state
-        });
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:3001' + path,
+            data: this.state,
+            contentType: "application/json",
+            dataType: 'json'
+    });
+
+//       request({
+//            method: "POST",
+//            uri: "http://localhost:3001/hi/yo",
+//            withCredentials: false,
+//            headers: {
+//                content-type: "application/json"
+//            },
+//            json: this.state
+//        });
     },
 
     setScenarioName(event) {

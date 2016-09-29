@@ -91,12 +91,8 @@ const App = React.createClass({
                 homePressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, 'home');
                 awayPressure = pressure;
             }
-            console.log(homePressure, awayPressure);
 
-            let totalPressure = homePressure + awayPressure;
-            let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
-            let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
-            const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
+            const updatedTeamPressure =  this.updatedPressureObjForBothTeams(homePressure, awayPressure);
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
             this.setState(newState);
@@ -118,13 +114,12 @@ const App = React.createClass({
         if (newValue >= 0) {
             let updatedWeightValue = { weights: {[action]: newValue }};
             let updatedState = merge({}, this.state, updatedWeightValue);
+
             let homePressure = this.calculatePressureForBothTeams(updatedState)[0];
             let awayPressure = this.calculatePressureForBothTeams(updatedState)[1];
+            console.log(homePressure, awayPressure)
+            const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
 
-            let totalPressure = homePressure + awayPressure;
-            let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
-            let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
-            const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
             const newState = merge({}, this.state, updatedState, updatedTeamPressure);
             this.setState(newState);
         }
@@ -132,9 +127,7 @@ const App = React.createClass({
 
     calculatePressureForTeam(updatedState, team) {
         let weights = updatedState.weights;
-        //console.log(team)
         return reduce(updatedState[team], function(result, v, k) {
-            //console.log(v + ' multiplied by ' + weights[k])
             return result + v * weights[k];
         }, 0);
     },
@@ -145,10 +138,20 @@ const App = React.createClass({
         let that = this;
 
         return map(teams, function(v, k) {
-            // k is home/away, v is the object
             return that.calculatePressureForTeam(updatedState, k);
         });
 
+    },
+
+    updatedPressureObjForBothTeams(homePressure, awayPressure) {
+        let totalPressure = homePressure + awayPressure;
+        let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
+        let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
+        console.log(homePressure, awayPressure);
+        return {
+              points: { 'home' : homePressure, 'away': awayPressure},
+              totals: { 'home' : homePerc, 'away': awayPerc}
+        };
     },
 
     generateTableRow(action) {

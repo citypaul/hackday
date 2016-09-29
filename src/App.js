@@ -79,9 +79,9 @@ const App = React.createClass({
 
             if (team === 'home') {
                 homePressure = pressure;
-                awayPressure = (action === 'possession') ?  this.calculatePressure(stateUpdatedWithActionValue, 'away') : this.state.points['away'];
+                awayPressure = this.calculatePressure(stateUpdatedWithActionValue, 'away');
             } else {
-                homePressure = (action === 'possession') ?  this.calculatePressure(stateUpdatedWithActionValue, 'home') : this.state.points['home'];
+                homePressure = this.calculatePressure(stateUpdatedWithActionValue, 'home');
                 awayPressure = pressure;
             }
             console.log(homePressure, awayPressure);
@@ -110,8 +110,6 @@ const App = React.createClass({
 
     calculatePressure(updatedState, team) {
         let weights = this.state.weights;
-        console.log(updatedState)
-
         return reduce(updatedState[team], function(result, v, k) {
             console.log(v + ' multiplied by ' + weights[k])
             return result + v * weights[k];

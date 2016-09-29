@@ -61,7 +61,8 @@ const App = React.createClass({
                 home: 50,
                 away: 50
             },
-            scenarioName: "unset"
+            scenarioName: "unset",
+            scenarioFileIndex: 0
         };
     },
 
@@ -202,17 +203,17 @@ const App = React.createClass({
 
     saveCurrentStateToFile() {
         var path = '/scenarios/' + this.state.scenarioName;
-        console.log('http://localhost:3001' + path)
+        console.log('http://localhost:3001' + path + '/' + this.state.scenarioFileIndex)
         $.ajax({
-            url: 'http://localhost:3001' + path,
+            url: 'http://localhost:3001' + path + '/' + this.state.scenarioFileIndex,
             type: 'POST',
             data: JSON.stringify(this.state),
             contentType: 'application/json',
             error: function(xhr, status, err) {
                 console.log(status, err.toString());
             }.bind(this)
-
-    });
+        });
+        this.setState({scenarioFileIndex: this.state.scenarioFileIndex + 1});
     },
 
     setScenarioName(event) {

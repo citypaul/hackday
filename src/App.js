@@ -9,7 +9,7 @@ const App = React.createClass({
         return {
             home: {
                 goals: 0,
-                possession: 50,
+                possession: 0,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -22,7 +22,7 @@ const App = React.createClass({
             },
             away: {
                 goals: 0,
-                possession: 50,
+                possession: 0,
                 shotsOnTarget: 0,
                 shotsOffTarget: 0,
                 fouls: 0,
@@ -62,7 +62,9 @@ const App = React.createClass({
         const newValue = currentValue + value;
         if (newValue >= 0) {
             const updatedTeamActionValue = { [team]: { [action]: newValue }};
-            const pressure = this.calculatePressure(updatedTeamActionValue, team);
+            const updatedState = merge({}, this.state, updatedTeamActionValue);
+            const pressure = this.calculatePressure(updatedState, team);
+
             let homePressure, awayPressure;
 
             if (team === 'home') {
@@ -72,6 +74,7 @@ const App = React.createClass({
                 homePressure = this.state.points['home'];
                 awayPressure = pressure;
             }
+            console.log(homePressure, awayPressure);
 
             let totalPressure = homePressure + awayPressure;
             let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
@@ -95,10 +98,11 @@ const App = React.createClass({
         }
     },
 
-    calculatePressure(actionValueObject, team) {
+    calculatePressure(updatedState, team) {
         let weights = this.state.weights;
+        console.log(updatedState)
 
-        return reduce(actionValueObject[team], function(result, v, k) {
+        return reduce(updatedState[team], function(result, v, k) {
             return result + v * weights[k];
         }, 0);
     },
@@ -137,7 +141,6 @@ const App = React.createClass({
                 {this.generateTableRow('redCards')}
                 {this.generateTableRow('penalties')}
                 {this.generateTableRow('crosses')}
-                {this.generateTableRow('passCompletions')}
                 {this.generateTableRow('freeKicks')}
             </tbody>
             );

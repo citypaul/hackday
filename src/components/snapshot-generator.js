@@ -20,10 +20,13 @@ const SnapshotGenerator = React.createClass({
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
-            let updatedTeamActionValue = { [team]: { [action]: newValue }};
+            let updatedTeamActionValue = {[team]: {[action]: newValue}};
             if (action === 'possession') {
                 let anotherTeamValue = 100 - newValue;
-                updatedTeamActionValue = { [team]: { [action]: newValue }, [this.getAnotherTeam(team)]: { [action]: anotherTeamValue } };
+                updatedTeamActionValue = {
+                    [team]: {[action]: newValue},
+                    [this.getAnotherTeam(team)]: {[action]: anotherTeamValue}
+                };
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
@@ -39,7 +42,7 @@ const SnapshotGenerator = React.createClass({
                 awayPressure = pressure;
             }
 
-            const updatedTeamPressure =  this.updatedPressureObjForBothTeams(homePressure, awayPressure);
+            const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
             this.setState(newState);
@@ -51,7 +54,7 @@ const SnapshotGenerator = React.createClass({
         let weights = updatedState.weights;
         let homeValue = updatedState.home[action] * weights[action]
         let awayValue = updatedState.away[action] * weights[action]
-        let updatedTeamActionValue = { 'home': { [action]: homeValue }, ['away']: { [action]: awayValue } };
+        let updatedTeamActionValue = {'home': {[action]: homeValue}, ['away']: {[action]: awayValue}};
         return updatedTeamActionValue;
     },
 
@@ -59,24 +62,23 @@ const SnapshotGenerator = React.createClass({
         const currentValue = this.state.weights[action];
         const newValue = currentValue + value;
 
-        if (newValue >= 0) {
-            let updatedWeightValue = { weights: {[action]: newValue }};
-            let updatedState = merge({}, this.state, updatedWeightValue);
+        let updatedWeightValue = {weights: {[action]: newValue}};
+        let updatedState = merge({}, this.state, updatedWeightValue);
 
-            let homePressure = this.calculatePressureForBothTeams(updatedState)[0];
-            let awayPressure = this.calculatePressureForBothTeams(updatedState)[1];
-            console.log(homePressure, awayPressure)
-            const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
+        let homePressure = this.calculatePressureForBothTeams(updatedState)[0];
+        let awayPressure = this.calculatePressureForBothTeams(updatedState)[1];
+        console.log(homePressure, awayPressure)
+        const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
 
-            const newState = merge({}, this.state, updatedState, updatedTeamPressure);
-            this.setState(newState);
-            this.props.onUpdate(newState);
-        }
+        const newState = merge({}, this.state, updatedState, updatedTeamPressure);
+        this.setState(newState);
+        this.props.onUpdate(newState);
+
     },
 
     calculatePressureForTeam(updatedState, team) {
         let weights = updatedState.weights;
-        return reduce(updatedState[team], function(result, v, k) {
+        return reduce(updatedState[team], function (result, v, k) {
             return result + v * weights[k];
         }, 0);
     },
@@ -85,7 +87,7 @@ const SnapshotGenerator = React.createClass({
         let teams = pick(updatedState, ['home', 'away']);
         let that = this;
 
-        return map(teams, function(v, k) {
+        return map(teams, function (v, k) {
             return that.calculatePressureForTeam(updatedState, k);
         });
 
@@ -93,28 +95,34 @@ const SnapshotGenerator = React.createClass({
 
     updatedPressureObjForBothTeams(homePressure, awayPressure) {
         let totalPressure = homePressure + awayPressure;
-        let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
-        let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
+        let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure / totalPressure;
+        let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure / totalPressure;
         console.log(homePressure, awayPressure);
         return {
-            points: { 'home' : homePressure, 'away': awayPressure},
-            totals: { 'home' : homePerc, 'away': awayPerc}
+            points: {'home': homePressure, 'away': awayPressure},
+            totals: {'home': homePerc, 'away': awayPerc}
         };
     },
 
     generateTableRow(action) {
         return (
             <tr>
-                <td className="gs-o-table__cell gs-o-table__cell--left">{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
+                <td className="gs-o-table__cell gs-o-table__cell--left">{action.replace(/^[a-z]|[A-Z]/g, function (v, i) {
+                    return i === 0 ? v.toUpperCase() : " " + v.toLowerCase();
+                })}</td>
                 <td className="gs-o-table__cell">
                     {this.state.home[action]}
-                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
-                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP
+                    </button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down
+                    </button>
                 </td>
                 <td className="gs-o-table__cell">
                     {this.state.away[action]}
-                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
-                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP
+                    </button>
+                    <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down
+                    </button>
                 </td>
                 <td className="gs-o-table__cell">
                     {this.state.weights[action]}
@@ -152,7 +160,9 @@ const SnapshotGenerator = React.createClass({
         return (
             <div>
                 <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
+                                   leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>
+
                     <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
                 </div>
                 <table className="gs-o-table">
@@ -167,7 +177,8 @@ const SnapshotGenerator = React.createClass({
                     {this.generateTableBody()}
                 </table>
                 <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
+                                   leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>
                 </div>
             </div>
         );

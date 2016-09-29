@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PercentageBar from './percentage-bar';
-import { merge, reduce } from 'lodash';
+import { merge, reduce, map, pick } from 'lodash';
 
 const App = React.createClass({
     getInitialTeamModel() {
@@ -79,15 +79,15 @@ const App = React.createClass({
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
-            const pressure = this.calculatePressure(stateUpdatedWithActionValue, team);
+            const pressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, team);
 
             let homePressure, awayPressure;
 
             if (team === 'home') {
                 homePressure = pressure;
-                awayPressure = this.calculatePressure(stateUpdatedWithActionValue, 'away');
+                awayPressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, 'away');
             } else {
-                homePressure = this.calculatePressure(stateUpdatedWithActionValue, 'home');
+                homePressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, 'home');
                 awayPressure = pressure;
             }
             console.log(homePressure, awayPressure);
@@ -102,24 +102,52 @@ const App = React.createClass({
         }
     },
 
+    changeActionValuesForBothTeams(updatedState, action) {
+        let weights = updatedState.weights;
+        let homeValue = updatedState.home[action] * weights[action]
+        let awayValue = updatedState.away[action] * weights[action]
+        let updatedTeamActionValue = { 'home': { [action]: homeValue }, ['away']: { [action]: awayValue } };
+        return updatedTeamActionValue;
+    },
+
     changeWeightValue(action, value) {
         const currentValue = this.state.weights[action];
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
             let updatedWeightValue = { weights: {[action]: newValue }};
-            let newState = merge({}, this.state, updatedWeightValue);
+            let updatedState = merge({}, this.state, updatedWeightValue);
+            let homePressure = this.calculatePressureForBothTeams(updatedState)[0];
+            let awayPressure = this.calculatePressureForBothTeams(updatedState)[1];
+
+            let totalPressure = homePressure + awayPressure;
+            let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
+            let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
+            const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
+            const newState = merge({}, this.state, updatedState, updatedTeamPressure);
             this.setState(newState);
-            this.calculatePressure(newState);
         }
     },
 
-    calculatePressure(updatedState, team) {
-        let weights = this.state.weights;
+    calculatePressureForTeam(updatedState, team) {
+        let weights = updatedState.weights;
+        //console.log(team)
         return reduce(updatedState[team], function(result, v, k) {
-            console.log(v + ' multiplied by ' + weights[k])
+            //console.log(v + ' multiplied by ' + weights[k])
             return result + v * weights[k];
         }, 0);
+    },
+
+    calculatePressureForBothTeams(updatedState) {
+        let weights = updatedState.weights;
+        let teams = pick(updatedState, ['home', 'away']);
+        let that = this;
+
+        return map(teams, function(v, k) {
+            // k is home/away, v is the object
+            return that.calculatePressureForTeam(updatedState, k);
+        });
+
     },
 
     generateTableRow(action) {

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import PercentageBar from './percentage-bar';
 import { merge, reduce } from 'lodash';
+var request = require('request');
 
 const App = React.createClass({
     getInitialTeamModel() {
@@ -171,11 +172,16 @@ const App = React.createClass({
 
     saveCurrentStateToFile() {
         var path = '/scenarios/ ' + this.state.scenarioName;
-        fs.outputFile(path + '/' + 1 + '.json');
+        request({
+            method: "POST",
+            uri: "http://localhost:3005" + path,
+            json: this.state
+        });
     },
 
     setScenarioName(event) {
-        this.setState({scenarioName: event.target.value});
+        let newState = merge({}, this.state, {scenarioName: event.target.value});
+        this.setState(newState);
     },
 
     render() {
@@ -198,7 +204,7 @@ const App = React.createClass({
                 <div>
                     <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
                     <label>Scenario:</label>
-                    <input type="text" value="" onChange={this.setScenarioName}/>
+                    <input type="text" onBlur={this.setScenarioName}/>
                 </div>
             </div>
         );

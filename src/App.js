@@ -73,8 +73,8 @@ const App = React.createClass({
         }
     },
 
-    loadScenario() {
-        jquery.get( "http://localhost:3001/scenarios/" + this.state.scenarioName, function( data ) {
+    loadScenario(scenarioName) {
+        jquery.get("http://localhost:3001/scenarios/" + scenarioName, function (data) {
             this.setState({
                 scenarios: data.scenarios
             });
@@ -83,11 +83,12 @@ const App = React.createClass({
 
     updateScenarioName(event) {
         this.setState({scenarioName: event.target.value});
+        this.loadScenario(event.target.value);
     },
 
     render() {
         /*
-        original save button:
+         original save button:
          <div>
          <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
          <label>Scenario:</label>
@@ -98,7 +99,6 @@ const App = React.createClass({
             <div>
                 <ScenarioGenerator scenario={this.state.generatorModel}/>
                 <div>
-                    <button type="button" onClick={this.loadScenario}>LOAD</button>
                     <label>Scenario:</label>
                     <input type="text" value={this.state.scenarioName} onChange={this.updateScenarioName}/>
                 </div>

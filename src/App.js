@@ -213,16 +213,6 @@ const App = React.createClass({
             }.bind(this)
 
     });
-
-//       request({
-//            method: "POST",
-//            uri: "http://localhost:3001/hi/yo",
-//            withCredentials: false,
-//            headers: {
-//                content-type: "application/json"
-//            },
-//            json: this.state
-//        });
     },
 
     setScenarioName(event) {

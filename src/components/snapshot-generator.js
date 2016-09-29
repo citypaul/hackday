@@ -1,16 +1,14 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React from 'react';
 import PercentageBar from './percentage-bar';
-var $ = require('jquery');
 import { merge, reduce, map, pick } from 'lodash';
 
-const ScenarioGenerator = React.createClass({
+const SnapshotGenerator = React.createClass({
     getInitialState() {
-        return this.props.scenario;
+        return this.props.snapshot;
     },
 
-    componentWillUpdate(nextProps, nextState) {
-        //this.props.onUpdate(nextState);
+    componentWillReceiveProps (props) {
+        this.setState(props.snapshot);
     },
 
     getAnotherTeam(teamName) {
@@ -151,6 +149,8 @@ const ScenarioGenerator = React.createClass({
     },
 
     render() {
+        console.log('generator state', this.state);
+        console.log('generator props', this.props);
         return (
             <div>
                 <div>
@@ -176,4 +176,4 @@ const ScenarioGenerator = React.createClass({
     }
 });
 
-export default ScenarioGenerator;
+export default SnapshotGenerator;

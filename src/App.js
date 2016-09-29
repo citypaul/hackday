@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import ScenarioGenerator from './components/scenario-generator';
-import ScenarioList from './components/scenario-list';
+import SnapshotGenerator from './components/snapshot-generator';
+import SnapshotList from './components/snapshot-list';
 import jquery from 'jquery';
 
 const App = React.createClass({
@@ -95,7 +95,7 @@ const App = React.createClass({
             error: function(xhr, status, err) {
                 console.log(status, err.toString());
             }.bind(this),
-            success: function (data) {
+            success: function () {
                 this.loadScenario(this.state.scenarioName);
             }.bind(this)
         });
@@ -108,17 +108,24 @@ const App = React.createClass({
         })
     },
 
+    handleLoadSnapshot(snapshot) {
+        this.setState({
+            generatorModel: snapshot
+        });
+    },
+
     render() {
+        console.log('calling render!', this.state.generatorModel);
         return (
             <div>
-                <ScenarioGenerator scenario={this.state.generatorModel} onUpdate={this.updateGeneratorModel}/>
+                <SnapshotGenerator snapshot={this.state.generatorModel} onUpdate={this.updateGeneratorModel}/>
                 <div>
                     <label>Scenario:</label>
                     <input type="text" value={this.state.scenarioName} onChange={this.updateScenarioName}/>
                 </div>
                 <button type="button" onClick={this.saveSnapshot}>SAVE SNAPSHOT</button>
 
-                <ScenarioList scenarios={this.state.scenarios}/>
+                <SnapshotList snapshots={this.state.scenarios} loadSnapshotHandler={this.handleLoadSnapshot}/>
             </div>
         );
     }

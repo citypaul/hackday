@@ -201,13 +201,17 @@ const App = React.createClass({
     },
 
     saveCurrentStateToFile() {
-        var path = '/scenarios/ ' + this.state.scenarioName;
+        var path = '/scenarios/' + this.state.scenarioName;
+        console.log('http://localhost:3001' + path)
         $.ajax({
-            type: "POST",
             url: 'http://localhost:3001' + path,
-            data: this.state,
-            contentType: "application/json",
-            dataType: 'json'
+            type: 'POST',
+            data: JSON.stringify(this.state),
+            contentType: 'application/json',
+            error: function(xhr, status, err) {
+                console.log(status, err.toString());
+            }.bind(this)
+
     });
 
 //       request({

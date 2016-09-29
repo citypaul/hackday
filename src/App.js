@@ -94,9 +94,12 @@ const App = React.createClass({
             contentType: 'application/json',
             error: function(xhr, status, err) {
                 console.log(status, err.toString());
+            }.bind(this),
+            success: function (data) {
+                this.loadScenario(this.state.scenarioName);
             }.bind(this)
         });
-        this.loadScenario(this.state.scenarioName);
+
     },
 
     updateGeneratorModel(updatedModel) {

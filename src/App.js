@@ -59,7 +59,8 @@ const App = React.createClass({
             totals: {
                 home: 50,
                 away: 50
-            }
+            },
+            scenarioName: "unset"
         };
     },
 
@@ -168,6 +169,15 @@ const App = React.createClass({
             );
     },
 
+    saveCurrentStateToFile() {
+        var path = '/scenarios/ ' + this.state.scenarioName;
+        fs.outputFile(path + '/' + 1 + '.json');
+    },
+
+    setScenarioName(event) {
+        this.setState({scenarioName: event.target.value});
+    },
+
     render() {
         return (
             <div>
@@ -184,6 +194,11 @@ const App = React.createClass({
                 </table>
                 <div>
                     <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
+                </div>
+                <div>
+                    <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
+                    <label>Scenario:</label>
+                    <input type="text" value="" onChange={this.setScenarioName}/>
                 </div>
             </div>
         );

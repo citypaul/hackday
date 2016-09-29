@@ -1,10 +1,9 @@
+/* eslint-disable */
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import PercentageBar from './percentage-bar';
-import { merge, reduce } from 'lodash';
 //var request = require('request');
 var $ = require('jquery');
+import { merge, reduce, map, pick } from 'lodash';
 
 const App = React.createClass({
     getInitialTeamModel() {
@@ -82,27 +81,31 @@ const App = React.createClass({
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
-            const pressure = this.calculatePressure(stateUpdatedWithActionValue, team);
+            const pressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, team);
 
             let homePressure, awayPressure;
 
             if (team === 'home') {
                 homePressure = pressure;
-                awayPressure = this.calculatePressure(stateUpdatedWithActionValue, 'away');
+                awayPressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, 'away');
             } else {
-                homePressure = this.calculatePressure(stateUpdatedWithActionValue, 'home');
+                homePressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, 'home');
                 awayPressure = pressure;
             }
-            console.log(homePressure, awayPressure);
 
-            let totalPressure = homePressure + awayPressure;
-            let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
-            let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
-            const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
+            const updatedTeamPressure =  this.updatedPressureObjForBothTeams(homePressure, awayPressure);
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 
             this.setState(newState);
         }
+    },
+
+    changeActionValuesForBothTeams(updatedState, action) {
+        let weights = updatedState.weights;
+        let homeValue = updatedState.home[action] * weights[action]
+        let awayValue = updatedState.away[action] * weights[action]
+        let updatedTeamActionValue = { 'home': { [action]: homeValue }, ['away']: { [action]: awayValue } };
+        return updatedTeamActionValue;
     },
 
     changeWeightValue(action, value) {
@@ -111,35 +114,62 @@ const App = React.createClass({
 
         if (newValue >= 0) {
             let updatedWeightValue = { weights: {[action]: newValue }};
-            let newState = merge({}, this.state, updatedWeightValue);
+            let updatedState = merge({}, this.state, updatedWeightValue);
+
+            let homePressure = this.calculatePressureForBothTeams(updatedState)[0];
+            let awayPressure = this.calculatePressureForBothTeams(updatedState)[1];
+            console.log(homePressure, awayPressure)
+            const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
+
+            const newState = merge({}, this.state, updatedState, updatedTeamPressure);
             this.setState(newState);
-            this.calculatePressure(newState);
         }
     },
 
-    calculatePressure(updatedState, team) {
-        let weights = this.state.weights;
+    calculatePressureForTeam(updatedState, team) {
+        let weights = updatedState.weights;
         return reduce(updatedState[team], function(result, v, k) {
-            console.log(v + ' multiplied by ' + weights[k])
             return result + v * weights[k];
         }, 0);
+    },
+
+    calculatePressureForBothTeams(updatedState) {
+        let weights = updatedState.weights;
+        let teams = pick(updatedState, ['home', 'away']);
+        let that = this;
+
+        return map(teams, function(v, k) {
+            return that.calculatePressureForTeam(updatedState, k);
+        });
+
+    },
+
+    updatedPressureObjForBothTeams(homePressure, awayPressure) {
+        let totalPressure = homePressure + awayPressure;
+        let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
+        let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
+        console.log(homePressure, awayPressure);
+        return {
+              points: { 'home' : homePressure, 'away': awayPressure},
+              totals: { 'home' : homePerc, 'away': awayPerc}
+        };
     },
 
     generateTableRow(action) {
         return (
             <tr>
-                <td>{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
-                <td>
+                <td className="gs-o-table__cell gs-o-table__cell--left">{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
+                <td className="gs-o-table__cell">
                     {this.state.home[action]}
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
                 </td>
-                <td>
+                <td className="gs-o-table__cell">
                     {this.state.away[action]}
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
                 </td>
-                <td>
+                <td className="gs-o-table__cell">
                     {this.state.weights[action]}
                     <button type="button" onClick={this.changeWeightValue.bind(this, action, 1)}>UP</button>
                     <button type="button" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
@@ -150,7 +180,7 @@ const App = React.createClass({
 
     generateTableBody() {
         return (
-            <tbody>
+            <tbody className="gel-long-primer">
                 {this.generateTableRow('goals')}
                 {this.generateTableRow('shotsOnTarget')}
                 {this.generateTableRow('shotsOffTarget')}
@@ -200,13 +230,18 @@ const App = React.createClass({
     render() {
         return (
             <div>
-                <table>
-                    <thead>
+                <div>
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
+
+                    <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
+                </div>
+                <table className="gs-o-table">
+                    <thead className="gs-o-table__head gel-brevier">
                         <tr>
-                            <th>Event</th>
-                            <th>Home</th>
-                            <th>Away</th>
-                            <th>Weights</th>
+                            <th className="gs-o-table__cell gs-o-table__cell--left">Event</th>
+                            <th className="gs-o-table__cell">Home</th>
+                            <th className="gs-o-table__cell">Away</th>
+                            <th className="gs-o-table__cell">Weights</th>
                         </tr>
                     </thead>
                     {this.generateTableBody()}

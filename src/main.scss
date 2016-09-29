@@ -1,0 +1,199 @@
+$gel-type-enable--markup-output: true;
+$gel-type-enable--font-family: true;
+
+@import '../bower_components/gel-sass-tools/sass-tools';
+@import '../bower_components/sass-mq/mq';
+@import '../bower_components/gel-typography/typography';
+@import '../bower_components/normalize-css/normalize.css';
+
+
+// Core Colours
+$sp-c-yellow: #ffdf43;
+$sp-c-white: #fff;
+$sp-c-black: #121212;
+$sp-c-charcoal: #252525;
+$sp-c-mortar: #5a5a5a;
+
+// supporting colours
+$sp-c-mine-shaft: #212121;
+$sp-c-silver: #dbdbdb;
+$sp-c-cloud: #ededed;
+$sp-c-mist: #f7f7f5;
+$sp-c-sunglow: #fddd2c;
+$sp-c-earls-green: #c6af36;
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+
+    vertical-align: baseline;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.percentage-row-chart__heading {
+    margin-bottom: halve($gel-spacing-unit);
+
+    text-align: center;
+}
+
+.percentage-row-chart {
+    display: inline-block;
+
+    margin:0;
+    padding-top: halve($gel-spacing-unit);
+
+    color: white;
+}
+
+.percentage-row-chart--left {
+    padding-left: $gel-spacing-unit;
+
+    border-right: 2px solid white;
+
+    background-color: #009850;
+}
+
+.percentage-row-chart--right {
+    padding-right: $gel-spacing-unit;
+
+    text-align: right;
+
+    background-color: #7ab2e2;
+}
+
+.flash-text {
+    margin: halve($gel-spacing-unit) 0;
+    padding: halve($gel-spacing-unit);
+
+    background-color: $sp-c-mortar;
+    text-align: center;
+
+    color: $sp-c-white;
+
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    }
+
+    @keyframes flash {
+        0%, 50%, 100% {
+           opacity: 1;
+        }
+        25%, 75% {
+           opacity: 0;
+        }
+     }
+     
+     .flash {
+        animation-name: flash;
+     }
+
+
+/*------------------------------------*\
+    # TABLE
+\*------------------------------------*/
+
+/**
+ * The table object allows you to make complex tables,
+ * from football league tables to medals tables.
+ */
+.gs-o-table {
+    width: 50%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: double($gel-spacing-unit);
+}
+
+.gs-o-table__head {
+    background: $sp-c-mist;
+
+    .gs-o-table__cell {
+        border-bottom: 1px solid $sp-c-silver;
+
+        @if $enhanced {
+            padding-top: double($gel-spacing-unit);
+            padding-bottom: halve($gel-spacing-unit);
+
+            vertical-align: bottom;
+        }
+    }
+}
+
+/**
+ * 1. Force first and last cells to have increased padding
+ */
+.gs-o-table__cell {
+    border-bottom: 1px solid $sp-c-cloud;
+    padding: $gel-spacing-unit halve($gel-spacing-unit);
+    text-align: center;
+
+    &:first-child {
+        #{$padding-left}: $gel-spacing-unit; /* [1] */
+    }
+
+    &:last-child {
+        #{$padding-right}: $gel-spacing-unit; /* [1] */
+    }
+}
+
+
+.gs-o-table__cell--border-right {
+    #{$border-right}: 1px solid $sp-c-cloud;
+}
+
+.gs-o-table__cell--border-left {
+    #{$border-left}: 1px solid $sp-c-cloud;
+}
+
+.gs-o-table__cell--left {
+    text-align: flip(left, right);
+}
+
+.gs-o-table__cell--center {
+    text-align: center;
+}
+
+.gs-o-table__cell--right {
+    text-align: flip(right, left);
+}
+
+.gs-o-table__cell--bold {
+    font-weight: bold;
+}
+
+.gs-o-table__cell--break {
+    border-top: 1px dashed $sp-c-charcoal;
+}
+
+.gs-o-table__link {
+    display: block;
+
+    color: $sp-c-black;
+    font-weight: bold;
+
+    &:focus,
+    &:hover {
+        text-decoration: underline;
+    }
+}

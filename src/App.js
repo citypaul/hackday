@@ -63,7 +63,11 @@ const App = React.createClass({
         };
     },
     render() {
-        return <ScenarioGenerator scenario={this.state}/>
+        return (
+            <div>
+                <ScenarioGenerator scenario={this.state}/>
+            </div>
+        );
     }
 });
 

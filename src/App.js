@@ -131,7 +131,6 @@ const App = React.createClass({
     },
 
     calculatePressureForBothTeams(updatedState) {
-        let weights = updatedState.weights;
         let teams = pick(updatedState, ['home', 'away']);
         let that = this;
 
@@ -217,7 +216,7 @@ const App = React.createClass({
                     </thead>
                     {this.generateTableBody()}
                 </table>
-                
+
             </div>
         );
     }

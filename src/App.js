@@ -1,7 +1,5 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import PercentageBar from './percentage-bar';
 import { merge, reduce, map, pick } from 'lodash';
 
@@ -157,18 +155,18 @@ const App = React.createClass({
     generateTableRow(action) {
         return (
             <tr>
-                <td>{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
-                <td>
+                <td className="gs-o-table__cell gs-o-table__cell--left">{action.replace(/^[a-z]|[A-Z]/g, function(v, i) { return i === 0 ? v.toUpperCase() : " " + v.toLowerCase(); })}</td>
+                <td className="gs-o-table__cell">
                     {this.state.home[action]}
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', 1)}>UP</button>
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'home', -1)}>Down</button>
                 </td>
-                <td>
+                <td className="gs-o-table__cell">
                     {this.state.away[action]}
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', 1)}>UP</button>
                     <button type="button" onClick={this.changeActionValueForTeam.bind(this, action, 'away', -1)}>Down</button>
                 </td>
-                <td>
+                <td className="gs-o-table__cell">
                     {this.state.weights[action]}
                     <button type="button" onClick={this.changeWeightValue.bind(this, action, 1)}>UP</button>
                     <button type="button" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
@@ -179,7 +177,7 @@ const App = React.createClass({
 
     generateTableBody() {
         return (
-            <tbody>
+            <tbody className="gel-long-primer">
                 {this.generateTableRow('goals')}
                 {this.generateTableRow('shotsOnTarget')}
                 {this.generateTableRow('shotsOffTarget')}
@@ -203,20 +201,23 @@ const App = React.createClass({
     render() {
         return (
             <div>
-                <table>
-                    <thead>
+                <div>
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
+
+                    <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
+                </div>
+                <table className="gs-o-table">
+                    <thead className="gs-o-table__head gel-brevier">
                         <tr>
-                            <th>Event</th>
-                            <th>Home</th>
-                            <th>Away</th>
-                            <th>Weights</th>
+                            <th className="gs-o-table__cell gs-o-table__cell--left">Event</th>
+                            <th className="gs-o-table__cell">Home</th>
+                            <th className="gs-o-table__cell">Away</th>
+                            <th className="gs-o-table__cell">Weights</th>
                         </tr>
                     </thead>
                     {this.generateTableBody()}
                 </table>
-                <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
-                </div>
+                
             </div>
         );
     }

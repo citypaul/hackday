@@ -51,8 +51,8 @@ const App = React.createClass({
                 away: 0
             },
             totals: {
-                home: 0,
-                away: 0
+                home: 50,
+                away: 50
             }
         };
     },
@@ -60,7 +60,6 @@ const App = React.createClass({
     changeActionValueForTeam(action, team, value) {
         const currentValue = this.state[team][action];
         const newValue = currentValue + value;
-
         if (newValue >= 0) {
             const updatedTeamActionValue = { [team]: { [action]: newValue }};
             const pressure = this.calculatePressure(updatedTeamActionValue, team);
@@ -75,8 +74,8 @@ const App = React.createClass({
             }
 
             let totalPressure = homePressure + awayPressure;
-            let homePerc = 100 * homePressure/totalPressure;
-            let awayPerc = 100 * awayPressure/totalPressure;
+            let homePerc = (totalPressure === 0) ? this.state.totals.home : 100 * homePressure/totalPressure;
+            let awayPerc = (totalPressure === 0) ? this.state.totals.away : 100 * awayPressure/totalPressure;
             const updatedTeamPressure = {  points: { 'home' : homePressure, 'away': awayPressure}, totals: { 'home' : homePerc, 'away': awayPerc} };
             const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
 

@@ -169,7 +169,6 @@ const ScenarioGenerator = React.createClass({
             <div>
                 <div>
                     <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
-
                     <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
                 </div>
                 <table className="gs-o-table">
@@ -185,11 +184,6 @@ const ScenarioGenerator = React.createClass({
                 </table>
                 <div>
                     <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true} leftValue={this.state.totals.home} rightValue= {this.state.totals.away} />
-                </div>
-                <div>
-                    <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
-                    <label>Scenario:</label>
-                    <input type="text" onBlur={this.setScenarioName}/>
                 </div>
             </div>
         );

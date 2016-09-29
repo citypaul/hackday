@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import ScenarioGenerator from './components/scenario-generator';
+import ScenarioList from './components/scenario-list';
+import jquery from 'jquery';
 
 const App = React.createClass({
     getInitialTeamModel() {
@@ -26,7 +28,7 @@ const App = React.createClass({
         }
     },
 
-    getInitialState() {
+    getInitialScenarioGeneratorModel() {
         return {
             home: this.getInitialTeamModel(),
             away: this.getInitialTeamModel(),
@@ -62,10 +64,45 @@ const App = React.createClass({
             scenarioFileIndex: 0
         };
     },
+
+    getInitialState() {
+        return {
+            generatorModel: this.getInitialScenarioGeneratorModel(),
+            scenarioName: "",
+            scenarios: []
+        }
+    },
+
+    loadScenario() {
+        jquery.get( "http://localhost:3001/scenarios/" + this.state.scenarioName, function( data ) {
+            this.setState({
+                scenarios: data.scenarios
+            });
+        }.bind(this));
+    },
+
+    updateScenarioName(event) {
+        this.setState({scenarioName: event.target.value});
+    },
+
     render() {
+        /*
+        original save button:
+         <div>
+         <button type="button" onClick={this.saveCurrentStateToFile}>SAVE</button>
+         <label>Scenario:</label>
+         <input type="text" onBlur={this.setScenarioName}/>
+         </div>
+         */
         return (
             <div>
-                <ScenarioGenerator scenario={this.state}/>
+                <ScenarioGenerator scenario={this.state.generatorModel}/>
+                <div>
+                    <button type="button" onClick={this.loadScenario}>LOAD</button>
+                    <label>Scenario:</label>
+                    <input type="text" value={this.state.scenarioName} onChange={this.updateScenarioName}/>
+                </div>
+                <ScenarioList scenarios={this.state.scenarios}/>
             </div>
         );
     }

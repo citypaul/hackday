@@ -121,7 +121,6 @@ const SnapshotGeneratorContainer = React.createClass({
     },
 
     render() {
-        console.log('calling render!', this.state.generatorModel);
         return (
             <div>
                 <SnapshotGenerator snapshot={this.state.generatorModel} onUpdate={this.updateGeneratorModel}/>

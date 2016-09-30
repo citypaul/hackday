@@ -1,6 +1,7 @@
 import React from 'react';
 import PercentageBar from './percentage-bar';
-import { merge, reduce, map, pick } from 'lodash';
+import jquery from 'jquery';
+import { merge, reduce, map, pick, capitalize } from 'lodash';
 
 const SnapshotGenerator = React.createClass({
     getInitialState() {
@@ -104,6 +105,14 @@ const SnapshotGenerator = React.createClass({
         };
     },
 
+    changeExtrasValue(event) {
+        const name = event.target.name;
+        const val = event.target.value;
+        const updatedEventObj = {events: {[name]: event.target.value}};
+
+        this.setState(merge({}, this.state, updatedEventObj));
+    },
+
     generateTableRow(action) {
         return (
             <tr>
@@ -130,6 +139,15 @@ const SnapshotGenerator = React.createClass({
                     <button type="button" onClick={this.changeWeightValue.bind(this, action, -1)}>Down</button>
                 </td>
             </tr>
+        );
+    },
+
+    generateEventInfoRow(value) {
+        return (
+             <div>
+                <span>{ capitalize(value) }: </span>
+                <input type="text" name={value} onChange={this.changeExtrasValue} /><br />
+            </div>
         );
     },
 
@@ -176,6 +194,8 @@ const SnapshotGenerator = React.createClass({
                     </thead>
                     {this.generateTableBody()}
                 </table>
+                {this.generateEventInfoRow('type')}
+                {this.generateEventInfoRow('text')}
                 <div>
                     <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                    leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>

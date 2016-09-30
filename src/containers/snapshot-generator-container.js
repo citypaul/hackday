@@ -58,7 +58,9 @@ const SnapshotGeneratorContainer = React.createClass({
             },
             totals: {
                 home: 50,
-                away: 50
+                away: 50,
+                homeTeamScore: 0,
+                awayTeamScore: 0
             },
             scenarioName: "unset",
             events: {
@@ -119,7 +121,6 @@ const SnapshotGeneratorContainer = React.createClass({
     },
 
     render() {
-        console.log('calling render!', this.state.generatorModel);
         return (
             <div>
                 <SnapshotGenerator snapshot={this.state.generatorModel} onUpdate={this.updateGeneratorModel}/>

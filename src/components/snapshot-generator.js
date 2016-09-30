@@ -21,13 +21,22 @@ const SnapshotGenerator = React.createClass({
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
+            let updatedScore = {};
             let updatedTeamActionValue = {[team]: {[action]: newValue}};
+
             if (action === 'possession') {
                 let anotherTeamValue = 100 - newValue;
                 updatedTeamActionValue = {
                     [team]: {[action]: newValue},
                     [this.getAnotherTeam(team)]: {[action]: anotherTeamValue}
                 };
+            }
+
+            if (action === 'goals' && value >= 1) {
+                let teamScore = team + "TeamScore"
+                let currentTotalScore = this.state.totals[teamScore];
+                const newValue = currentTotalScore + value;
+                updatedScore = {totals: {[teamScore]: newValue}}
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
@@ -44,7 +53,7 @@ const SnapshotGenerator = React.createClass({
             }
 
             const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
-            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
+            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure, updatedScore);
 
             this.setState(newState);
             this.props.onUpdate(newState);
@@ -143,7 +152,6 @@ const SnapshotGenerator = React.createClass({
             </tr>
         );
     },
-
     generateEventInfoRow(value) {
         return (
              <div>

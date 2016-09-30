@@ -7,8 +7,14 @@ const MatchViewContainer = React.createClass({
     getInitialState() {
         return {
             scenarioIndex: 0,
-            homeTeam: 50,
-            awayTeam: 50
+            home: {
+                pressure: 50,
+                score: 0
+            },
+            away: {
+                pressure: 50,
+                score: 0
+            }
         }
     },
 
@@ -19,13 +25,22 @@ const MatchViewContainer = React.createClass({
                 let newIndex = this.state.scenarioIndex + 1;
                 this.setState({
                     scenarioIndex: newIndex,
-                    homeTeam: data.totals.home,
-                    awayTeam: data.totals.away
+                    home: {
+                        pressure: data.totals.home,
+                        score: data.totals.homeTeamScore
+                    },
+                    away: {
+                        pressure: data.totals.away,
+                        score: data.totals.awayTeamScore
+                    }
                 })
             }.bind(this),
-            error: function () {
-
-            }
+            error: function (err) {
+                this.setState({
+                    scenarioIndex: 0
+                })
+                console.log(err);
+            }.bind(this)
         });
     },
 
@@ -41,7 +56,7 @@ const MatchViewContainer = React.createClass({
             <div>
                 <FootballHeader/>
                 <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
-                               leftValue={this.state.homeTeam} rightValue={this.state.awayTeam}/>
+                               leftValue={this.state.home.pressure} rightValue={this.state.away.pressure}/>
             </div>
         );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 
 
 const PercentageRowValue = React.createClass({
@@ -20,10 +21,20 @@ propTypes: {
 
 render: function () {
     var positionModifierClass = 'percentage-row-chart--' + this.props.position,
-        classNames = ['percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+'],
+        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+'),
         value = this.props.children + this.props.suffix;
 
-    return (<dd className={classNames.join(' ')} style={{width: this.props.width}} key={this.props.key}>
+    if (this.props.statusIndicator === 'awayOnTop' &&  this.props.position == 'right') {
+        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart--right-active')
+    }
+
+    if (this.props.statusIndicator === 'homeOnTop' &&  this.props.position == 'left') {
+        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart--left-active')
+    }
+
+    console.log("UUUUU", myClassNames);
+
+    return (<dd className={myClassNames} style={{width: this.props.width}} key={this.props.key}>
 <span className="vh">{this.props.label}</span>
 {value}
 </dd>);

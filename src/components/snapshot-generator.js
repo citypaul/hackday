@@ -109,8 +109,10 @@ const SnapshotGenerator = React.createClass({
         const name = event.target.name;
         const val = event.target.value;
         const updatedEventObj = {events: {[name]: event.target.value}};
+        const newState = merge({}, this.state, updatedEventObj);
+        this.setState(newState);
+        this.props.onUpdate(newState);
 
-        this.setState(merge({}, this.state, updatedEventObj));
     },
 
     generateTableRow(action) {

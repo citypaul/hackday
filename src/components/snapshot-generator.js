@@ -164,7 +164,6 @@ const SnapshotGenerator = React.createClass({
     generateTableBody() {
         return (
             <tbody className="gel-long-primer">
-            {this.generateTableRowForEvent()}
             {this.generateTableRow('goals')}
             {this.generateTableRow('shotsOnTarget')}
             {this.generateTableRow('shotsOffTarget')}

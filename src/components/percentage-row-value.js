@@ -24,12 +24,12 @@ render: function () {
         myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+'),
         value = this.props.children + this.props.suffix;
 
-    if (this.props.statusIndicator === 'homeOnTop' &&  this.props.position == 'right') {
-        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart—-right-active')
+    if (this.props.statusIndicator === 'awayOnTop' &&  this.props.position == 'right') {
+        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart--right-active')
     }
 
-    if (this.props.statusIndicator === 'awayOnTop' &&  this.props.position == 'left') {
-        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart-—left-active')
+    if (this.props.statusIndicator === 'homeOnTop' &&  this.props.position == 'left') {
+        myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart--left-active')
     }
 
     console.log("UUUUU", myClassNames);

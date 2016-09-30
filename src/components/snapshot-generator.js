@@ -23,6 +23,7 @@ const SnapshotGenerator = React.createClass({
         if (newValue >= 0) {
             let updatedScore = {};
             let updatedTeamActionValue = {[team]: {[action]: newValue}};
+
             if (action === 'possession') {
                 let anotherTeamValue = 100 - newValue;
                 updatedTeamActionValue = {
@@ -35,8 +36,7 @@ const SnapshotGenerator = React.createClass({
                 let teamScore = team + "TeamScore"
                 let currentTotalScore = this.state.totals[teamScore];
                 const newValue = currentTotalScore + value;
-                let updatedScore = {totals: {[teamScore]: newValue}}
-                console.log(updatedScore);
+                updatedScore = {totals: {[teamScore]: newValue}}
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);

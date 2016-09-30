@@ -1,10 +1,10 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import SnapshotGenerator from './components/snapshot-generator';
-import SnapshotList from './components/snapshot-list';
+import SnapshotGenerator from './../components/snapshot-generator';
+import SnapshotList from './../components/snapshot-list';
 import jquery from 'jquery';
 
-const App = React.createClass({
+const SnapshotGeneratorContainer = React.createClass({
     getInitialTeamModel() {
         return {
             goals: 0,
@@ -131,4 +131,4 @@ const App = React.createClass({
     }
 });
 
-export default App;
+export default SnapshotGeneratorContainer;

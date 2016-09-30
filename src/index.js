@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import SnapshotGeneratorContainer from './containers/snapshot-generator-container';
 import './main.css';
 
 ReactDOM.render(
-  <App />,
+  <SnapshotGeneratorContainer />,
   document.getElementById('root')
 );

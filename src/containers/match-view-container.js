@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import SnapshotList from './../components/snapshot-list';
+import PercentageBar from '../components/percentage-bar';
 import jquery from 'jquery';
 
 const MatchViewContainer = React.createClass({
@@ -8,7 +8,11 @@ const MatchViewContainer = React.createClass({
         const style = { color: 'peru' };
 
         return (
-            <h1>Hello, match view container!</h1>
+            <div>
+                <h1>Hello, match view container!</h1>
+                <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
+                                   leftValue={50} rightValue={50} />
+            </div>
         );
     }
 });

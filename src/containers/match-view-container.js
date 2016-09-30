@@ -63,14 +63,9 @@ const MatchViewContainer = React.createClass({
         return (
             <div>
                 <FootballHeader homeScore={this.state.home.score} awayScore={this.state.away.score} />
-<<<<<<< Updated upstream
-                <PercentageBar leftLabel="Home: " rightLabel="Away: " percentage={true}
-                               leftValue={this.state.home.pressure} rightValue={this.state.away.pressure} />
-=======
                 <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                leftValue={this.state.home.pressure} rightValue={this.state.away.pressure}
                     statusIndicator={this.state.statusIndicator} />
->>>>>>> Stashed changes
                 <FlashText type={this.state.events.type} text={this.state.events.text} />
 
             </div>

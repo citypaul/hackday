@@ -1,6 +1,7 @@
 import React from 'react';
 import PercentageBar from './percentage-bar';
 import { merge, reduce, map, pick } from 'lodash';
+import $ from 'jquery';
 
 const SnapshotGenerator = React.createClass({
     getInitialState() {
@@ -20,6 +21,7 @@ const SnapshotGenerator = React.createClass({
         const newValue = currentValue + value;
 
         if (newValue >= 0) {
+            let updatedScore = {};
             let updatedTeamActionValue = {[team]: {[action]: newValue}};
             if (action === 'possession') {
                 let anotherTeamValue = 100 - newValue;
@@ -27,6 +29,14 @@ const SnapshotGenerator = React.createClass({
                     [team]: {[action]: newValue},
                     [this.getAnotherTeam(team)]: {[action]: anotherTeamValue}
                 };
+            }
+
+            if (action === 'goals' && value >= 1) {
+                let teamScore = team + "TeamScore"
+                let currentTotalScore = this.state.totals[teamScore];
+                const newValue = currentTotalScore + value;
+                let updatedScore = {totals: {[teamScore]: newValue}}
+                console.log(updatedScore);
             }
 
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
@@ -43,7 +53,7 @@ const SnapshotGenerator = React.createClass({
             }
 
             const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
-            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure);
+            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure, updatedScore);
 
             this.setState(newState);
             this.props.onUpdate(newState);
@@ -133,9 +143,38 @@ const SnapshotGenerator = React.createClass({
         );
     },
 
+    saveEvent() {
+    var actionName = $('#action_name').val();
+    var actionMinute = $('#minute_name').val();
+    $('#action_name').val("");
+    $('#action_text').val("");
+        this.setState(
+            {
+                events: {
+                     type: actionName,
+                     text: actionMinute
+                }
+            }
+        );
+    console.log("state", this.state);
+    },
+
+    generateTableRowForEvent() {
+        return (
+            <div>
+                <label>Event Type:</label>
+                <input id="action_name" type="text"/>
+                <label>Event Text:</label>
+                <input id="action_text"type="text"/>
+                <button type="button" onClick={this.saveEvent}>SAVE EVENT</button>
+            </div>
+            );
+    },
+
     generateTableBody() {
         return (
             <tbody className="gel-long-primer">
+            {this.generateTableRowForEvent()}
             {this.generateTableRow('goals')}
             {this.generateTableRow('shotsOnTarget')}
             {this.generateTableRow('shotsOffTarget')}

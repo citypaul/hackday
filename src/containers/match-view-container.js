@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PercentageBar from '../components/percentage-bar';
 import FlashText from '../components/flash-text';
-import jquery from 'jquery';
+import LineChart from '../components/line-chart';
 import FootballHeader from '../components/header';
+
+import jquery from 'jquery';
+import {round} from 'lodash';
 
 const MatchViewContainer = React.createClass({
     getInitialState() {
@@ -20,7 +23,10 @@ const MatchViewContainer = React.createClass({
                 pressure: 50,
                 score: 0
             },
-            statusIndicator: "level"
+            statusIndicator: "level",
+            totals: {
+                home: 0, away: 0
+            }
         }
     },
 
@@ -43,7 +49,12 @@ const MatchViewContainer = React.createClass({
                         type: data.events.type,
                         text: data.events.text
                     },
-                    statusIndicator: data.statusIndicator
+                    statusIndicator: data.statusIndicator,
+                    totals: {
+                        home: data.totals.home,
+                        away: data.totals.away
+
+                    }
                 })
             }.bind(this),
             error: function (err) {
@@ -67,6 +78,7 @@ const MatchViewContainer = React.createClass({
                                leftValue={this.state.home.pressure} rightValue={this.state.away.pressure}
                     statusIndicator={this.state.statusIndicator} />
                 <FlashText type={this.state.events.type} text={this.state.events.text} />
+                <LineChart home={round(this.state.totals.home)} away={round(this.state.totals.away)} />
 
             </div>
         );

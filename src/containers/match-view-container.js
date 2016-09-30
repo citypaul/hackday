@@ -54,7 +54,7 @@ const MatchViewContainer = React.createClass({
 
         return (
             <div>
-                <FootballHeader/>
+                <FootballHeader homeScore={this.state.home.score} awayScore={this.state.away.score} />
                 <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                leftValue={this.state.home.pressure} rightValue={this.state.away.pressure}/>
             </div>

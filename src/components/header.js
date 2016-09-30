@@ -19,7 +19,7 @@ const Header = React.createClass({
                                 </span>
                             </span>
                             <span className="fixture__block">
-                                <span className="fixture__number fixture__number--home fixture__number--ft">3</span>
+                                <span className="fixture__number fixture__number--home fixture__number--ft">{this.props.homeScore}</span>
                             </span>
                         </span>
                         <span className="fixture__team gel-double-pica fixture__team--away">
@@ -31,7 +31,7 @@ const Header = React.createClass({
                                 </span>
                             </span>
                             <span className="fixture__block">
-                                <span className="fixture__number fixture__number--away fixture__number--ft">3</span>
+                                <span className="fixture__number fixture__number--away fixture__number--ft">{this.props.awayScore}</span>
                             </span>
                         </span>
                     </div>

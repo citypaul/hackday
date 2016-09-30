@@ -123,8 +123,6 @@ const percentageBar = React.createClass({
             'gel-pica-bold'
         );
 
-        console.log('classes: ', flashTextClasses);
-
         return (
             <dl className="percentage-row" key={this.props.key}>
                 <dt className={flashTextClasses}>{this.props.heading}</dt>

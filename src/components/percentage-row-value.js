@@ -32,8 +32,6 @@ render: function () {
         myClassNames = classNames('percentage-row-chart', positionModifierClass, 'gel-pica', 'gel-mb+', 'percentage-row-chart--left-active')
     }
 
-    console.log("UUUUU", myClassNames);
-
     return (<dd className={myClassNames} style={{width: this.props.width}} key={this.props.key}>
 <span className="vh">{this.props.label}</span>
 {value}

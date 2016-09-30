@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PercentageBar from '../components/percentage-bar';
 import jquery from 'jquery';
+import FootballHeader from '../components/header';
 
 const MatchViewContainer = React.createClass({
     getInitialState() {
@@ -29,7 +30,7 @@ const MatchViewContainer = React.createClass({
     },
 
     componentDidMount() {
-        setInterval(this.requestData, 2000);
+        setInterval(this.requestData, 1000);
     },
 
     render() {
@@ -38,7 +39,7 @@ const MatchViewContainer = React.createClass({
 
         return (
             <div>
-                <h1>Hello, match view container!</h1>
+                <FootballHeader/>
                 <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                leftValue={this.state.homeTeam} rightValue={this.state.awayTeam}/>
             </div>

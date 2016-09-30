@@ -188,7 +188,7 @@ const SnapshotGenerator = React.createClass({
         return (
             <div>
                 <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
+                    <PercentageBar leftLabel="Home: " rightLabel="Away: " percentage={true}
                                    leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>
 
                     <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
@@ -206,10 +206,6 @@ const SnapshotGenerator = React.createClass({
                 </table>
                 {this.generateEventInfoRow('type')}
                 {this.generateEventInfoRow('text')}
-                <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
-                                   leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>
-                </div>
             </div>
         );
     }

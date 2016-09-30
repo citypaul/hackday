@@ -364,6 +364,7 @@ time, mark, audio, video {
   text-align: center; }
 
 .percentage-row-chart {
+  position: relative;
   display: inline-block;
   margin: 0;
   padding-top: 4px;
@@ -372,13 +373,42 @@ time, mark, audio, video {
 
 .percentage-row-chart--left {
   padding-left: 8px;
-  border-right: 2px solid white;
   background-color: #009850; }
+
+.percentage-row-chart--left-active:after {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #009850;
+  border-width: 13px;
+  margin-top: -13px;
+  z-index: 999; }
 
 .percentage-row-chart--right {
   padding-right: 8px;
   text-align: right;
   background-color: #7ab2e2; }
+
+.percentage-row-chart--right-active:after {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-right-color: #7ab2e2;
+  border-width: 13px;
+  margin-top: -13px;
+  z-index: 999; }
 
 .flash-text {
   display: none;

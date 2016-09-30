@@ -6,11 +6,12 @@ const FlashText = React.createClass({
 
 
     render: function () {
+        console.log(this.props.type, this.props.type==='goal')
         let flashTextClasses = classNames(
             'flash-text',
-            'flash',
             {
-                'flash-text--active': this.props.type
+                'flash-text--active': this.props.type,
+                'flash': this.props.type==='goal'
             }
         );
 

@@ -113,7 +113,7 @@ const SnapshotGeneratorContainer = React.createClass({
                 console.log(status, err.toString());
             }.bind(this),
             success: function () {
-                this.loadScenario(this.state.scenarioName);
+                //this.loadScenario(this.state.scenarioName);
             }.bind(this)
         });
 

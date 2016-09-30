@@ -54,7 +54,7 @@ const MatchViewContainer = React.createClass({
     },
 
     componentDidMount() {
-        setInterval(this.requestData, 1000);
+        setInterval(this.requestData, 2000);
     },
 
     render() {

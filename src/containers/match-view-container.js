@@ -37,6 +37,10 @@ const MatchViewContainer = React.createClass({
                     away: {
                         pressure: data.totals.away,
                         score: data.totals.awayTeamScore
+                    },
+                    events: {
+                        type: data.events.type,
+                        text: data.events.text
                     }
                 })
             }.bind(this),
@@ -54,9 +58,6 @@ const MatchViewContainer = React.createClass({
     },
 
     render() {
-        console.log(this.props);
-        const style = {color: 'peru'};
-
         return (
             <div>
                 <FootballHeader homeScore={this.state.home.score} awayScore={this.state.away.score} />

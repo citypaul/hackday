@@ -66,7 +66,8 @@ const SnapshotGeneratorContainer = React.createClass({
             events: {
                 type: "",
                 text: ""
-            }
+            },
+            statusIndicator: 'level'
         };
     },
 

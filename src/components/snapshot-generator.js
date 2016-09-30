@@ -42,7 +42,9 @@ const SnapshotGenerator = React.createClass({
             const stateUpdatedWithActionValue = merge({}, this.state, updatedTeamActionValue);
             const pressure = this.calculatePressureForTeam(stateUpdatedWithActionValue, team);
 
-            let homePressure, awayPressure;
+            let homePressure, awayPressure, homeOnTop, statusIndicator = {}, previousAwayPressure = this.state.totals.away , previousHomePressure = this.state.totals.home;
+
+
 
             if (team === 'home') {
                 homePressure = pressure;
@@ -52,8 +54,15 @@ const SnapshotGenerator = React.createClass({
                 awayPressure = pressure;
             }
 
+            if (previousHomePressure <= homePressure) {
+                statusIndicator = {statusIndicator: 'homeOnTop'};
+            } else {
+                statusIndicator = {statusIndicator: 'awayOnTop'};
+            }
+
             const updatedTeamPressure = this.updatedPressureObjForBothTeams(homePressure, awayPressure);
-            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure, updatedScore);
+            const newState = merge({}, this.state, updatedTeamActionValue, updatedTeamPressure, updatedScore, statusIndicator);
+
 
             this.setState(newState);
             this.props.onUpdate(newState);

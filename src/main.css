@@ -1,3 +1,4 @@
+@import url(../bower_components/normalize-css/normalize.css);
 .gel-canon {
   font-size: 28px;
   font-size: 1.75rem;
@@ -366,7 +367,8 @@ time, mark, audio, video {
   display: inline-block;
   margin: 0;
   padding-top: 4px;
-  color: white; }
+  color: white;
+  transition: width 2s; }
 
 .percentage-row-chart--left {
   padding-left: 8px;

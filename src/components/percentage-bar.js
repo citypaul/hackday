@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PercentageRowValue from './percentage-row-value';
+import classNames from 'classnames';
 
 
 const percentageBar = React.createClass({
@@ -115,9 +116,20 @@ const percentageBar = React.createClass({
     },
 
     render: function () {
+        let flashTextClasses = classNames(
+            'percentage-row-chart__heading',
+            'gel-pica-bold',
+            {
+                'percentage-row-chart--left-active': this.props.statusIndicator === 'homeOnTop',
+                'percentage-row-chart—right-active': this.props.statusIndicator === 'awayOnTop'
+            }
+        );
+
+        console.log('classes: ', flashTextClasses);
+
         return (
             <dl className="percentage-row" key={this.props.key}>
-                <dt className="percentage-row-chart__heading gel-pica-bold">{this.props.heading}</dt>
+                <dt className={flashTextClasses}>{this.props.heading}</dt>
                 {this.getRowValues()}
             </dl>
         );

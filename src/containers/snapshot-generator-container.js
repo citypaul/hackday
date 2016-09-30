@@ -74,6 +74,8 @@ const SnapshotGeneratorContainer = React.createClass({
     getInitialState() {
         return {
             generatorModel: this.getInitialScenarioGeneratorModel(),
+            homeTeamPercentage: 50,
+            awayTeamPercentage: 50,
             scenarioName: "",
             scenarios: []
         }
@@ -93,6 +95,14 @@ const SnapshotGeneratorContainer = React.createClass({
     },
 
     saveSnapshot() {
+    if (this.state.homeTeamPercentage <= this.state.generatorModel.totals.home) {
+        this.state.generatorModel.statusIndicator = "homeOnTop"
+    } else {
+        this.state.generatorModel.statusIndicator = "awayOnTop"
+    }
+    this.setState({homeTeamPercentage: this.state.generatorModel.totals.home})
+
+
         var path = '/scenarios/' + this.state.scenarioName;
         jquery.ajax({
             url: 'http://localhost:3001' + path,

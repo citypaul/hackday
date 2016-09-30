@@ -84,6 +84,7 @@ time, mark, audio, video {
 }
 
 .flash-text {
+    display: none;
     margin: halve($gel-spacing-unit) 0;
     padding: halve($gel-spacing-unit);
 
@@ -99,18 +100,22 @@ time, mark, audio, video {
 
     }
 
-    @keyframes flash {
-        0%, 50%, 100% {
-           opacity: 1;
-        }
-        25%, 75% {
-           opacity: 0;
-        }
-     }
-     
-     .flash {
-        animation-name: flash;
-     }
+@keyframes flash {
+    0%, 50%, 100% {
+       opacity: 1;
+    }
+    25%, 75% {
+       opacity: 0;
+    }
+ }
+ 
+ .flash {
+    animation-name: flash;
+ }
+
+.flash-text--active {
+    display: block;
+}
 
 
 /*------------------------------------*\

@@ -381,6 +381,7 @@ time, mark, audio, video {
   background-color: #7ab2e2; }
 
 .flash-text {
+  display: none;
   margin: 4px 0;
   padding: 4px;
   background-color: #5a5a5a;
@@ -398,6 +399,9 @@ time, mark, audio, video {
     opacity: 0; } }
 .flash {
   animation-name: flash; }
+
+.flash-text--active {
+  display: block; }
 
 /*------------------------------------*\
     # TABLE

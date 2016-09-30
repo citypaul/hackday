@@ -12,9 +12,7 @@ ReactDOM.render(
         <Route path="/" component={SnapshotGeneratorContainer}/>
       </Route>
 
-      <Route path="/match" component={MatchViewContainer}>
-        <Route path="match" component={MatchViewContainer} />
-      </Route>
+      <Route path="match/:scenario" component={MatchViewContainer}></Route>
     </Router>,
   document.getElementById('root')
 );

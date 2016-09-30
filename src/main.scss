@@ -64,6 +64,8 @@ time, mark, audio, video {
     padding-top: halve($gel-spacing-unit);
 
     color: white;
+
+    transition: width 2s;
 }
 
 .percentage-row-chart--left {

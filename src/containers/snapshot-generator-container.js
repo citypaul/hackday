@@ -60,7 +60,11 @@ const SnapshotGeneratorContainer = React.createClass({
                 home: 50,
                 away: 50
             },
-            scenarioName: "unset"
+            scenarioName: "unset",
+            events: {
+                type: "",
+                text: ""
+            }
         };
     },
 

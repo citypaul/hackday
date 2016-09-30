@@ -1,4 +1,4 @@
-/*@import url(../bower_components/normalize-css/normalize.css);*/
+@import url(../bower_components/normalize-css/normalize.css);
 .gel-canon {
   font-size: 28px;
   font-size: 1.75rem;
@@ -460,5 +460,428 @@ time, mark, audio, video {
   font-weight: bold; }
   .gs-o-table__link:focus, .gs-o-table__link:hover {
     text-decoration: underline; }
+
+/*------------------------------------*\
+    # FIXTURE
+\*------------------------------------*/
+/**
+* 1. Get around an overly specific font-size rule in Live
+*    which causes additional space between the fixture details
+*    and the live tag - this change has no effect on Onesport pages
+*/
+.fixture {
+  position: relative;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  /* [1] */ }
+
+.fixture--live-session-header {
+  color: #fff; }
+  .fixture--live-session-header a {
+    color: #fff; }
+
+/**
+* 1. Hack to overide underline on cricket score
+*/
+.fixture__block-link {
+  display: block; }
+  .fixture__block-link:hover .fixture__team-name, .fixture__block-link:hover .fixture__team--time, .fixture__block-link:hover .fixture__team-name-trunc {
+    text-decoration: underline; }
+    .fixture__block-link:hover .fixture__team-name .fixture__cricket-score, .fixture__block-link:hover .fixture__team--time .fixture__cricket-score, .fixture__block-link:hover .fixture__team-name-trunc .fixture__cricket-score {
+      text-decoration: none;
+      /* [1] */
+      display: inline-block;
+      /* [1] */
+      width: 100%;
+      /* [1] */ }
+
+.fixture__title {
+  text-align: left;
+  margin-bottom: 8px; }
+  .fixture--live-session-header .fixture__title {
+    border-left: 1px solid #5a5a5a;
+    padding-left: 8px;
+    margin-left: 8px;
+    display: inline; }
+
+.fixture__title--center {
+  display: block;
+  text-align: center;
+  margin-bottom: 4px; }
+
+.fixture__date {
+  display: block;
+  margin-bottom: 4px;
+  color: #5a5a5a;
+  text-transform: uppercase; }
+  .fixture--live-session-header .fixture__date {
+    display: inline;
+    font-weight: bold !important;
+    color: #fff; }
+
+.fixture__date--left {
+  text-align: left; }
+
+@media (min-width: 37.5em) {
+  .fixture__date--long {
+    display: inline; }
+
+  .fixture__date--short {
+    display: none; } }
+.fixture_date-time-wrapper {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0; }
+
+.fixture__date--long {
+  display: none; }
+
+.fixture__wrapper {
+  display: table;
+  width: 100%;
+  letter-spacing: -.31em;
+  font-size: 0;
+  margin-bottom: 4px; }
+  .fixture--live-session-header .fixture__wrapper {
+    margin-bottom: 8px; }
+    @media (min-width: 56.25em) {
+      .fixture--live-session-header .fixture__wrapper {
+        max-height: 38px; } }
+
+.fixture__team {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  letter-spacing: normal;
+  min-width: 75px;
+  color: #121212; }
+  .fixture--stack .fixture__team {
+    min-width: 0; }
+  .fixture--live-session-header .fixture__team {
+    color: #fff; }
+
+/**
+* 1. Push flags under teamname in IE.
+*/
+.fixture__team--time {
+  position: relative;
+  display: table-cell;
+  padding-top: 4px; }
+  .fixture--live-session-header .fixture__team--time {
+    font-weight: normal !important; }
+  .fixture__team--time .fixture__flag--block {
+    position: relative;
+    top: 0;
+    /* [1] */ }
+
+.fixture__team--away,
+.fixture__team--time-away {
+  direction: rtl; }
+
+.fixture__team-name {
+  display: table-cell;
+  width: 100%;
+  font-weight: bold !important;
+  vertical-align: middle; }
+  .fixture--live-session-header .fixture__team-name {
+    font-weight: normal !important;
+    vertical-align: bottom; }
+
+.fixture__team-name--home,
+.fixture__team--time-home {
+  text-align: right;
+  padding-right: 8px; }
+  .fixture--live-session-header .fixture__team-name--home, .fixture--live-session-header
+  .fixture__team--time-home {
+    padding-right: 10px; }
+
+.fixture__team-name--away,
+.fixture__team--time-away {
+  text-align: left;
+  padding-left: 8px; }
+  .fixture--live-session-header .fixture__team-name--away, .fixture--live-session-header
+  .fixture__team--time-away {
+    padding-left: 10px; }
+
+.fixture__team-name-wrap {
+  position: relative;
+  display: block;
+  min-height: 26px; }
+  .fixture__team--time .fixture__team-name-wrap {
+    min-height: 20px; }
+  .fixture--live-session-header .fixture__team-name-wrap {
+    min-height: 28px; }
+
+/**
+* Truncate the team name if the name extends beyond
+* the width of its parent
+*
+* 1. Line-height collapses so we need to set it to match the size
+*    of the fixture-block
+* 2. Reset the direction of the text
+*/
+.fixture__team-name-trunc {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 28px;
+  /* [1] */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+  .fixture__team--away .fixture__team-name-trunc, .fixture__team--time-away .fixture__team-name-trunc {
+    direction: ltr;
+    /* [2] */ }
+  .fixture__team--time-home .fixture__team-name-trunc, .fixture__team--time-away .fixture__team-name-trunc {
+    line-height: 14px;
+    /* [1] */ }
+  .fixture--live-session-header .fixture__team-name-trunc {
+    line-height: 24px;
+    /* [1] */ }
+
+/**
+ * 1. IE is inheriting letter-spacing from its parent elements, where as
+ *    other browsers ignore this. We're just forcing the letter-spacing to
+ *    reset here.
+ */
+.fixture__block {
+  display: table-cell;
+  letter-spacing: normal;
+  /* [1] */ }
+
+.fixture__block--time {
+  min-width: 54px;
+  vertical-align: top;
+  line-height: 16px; }
+
+.fixture__number {
+  min-width: 28px;
+  background-color: #dbdbdb;
+  font-weight: bold !important;
+  text-align: center;
+  display: block;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  color: #121212; }
+  .fixture--live-session-header .fixture__number {
+    min-width: 38px;
+    padding-right: 4px;
+    padding-left: 4px;
+    line-height: 24px; }
+
+.fixture__number--ft {
+  background-color: #ffdf43; }
+
+.fixture__number--live {
+  background-color: #1169f6;
+  color: #fff; }
+
+.fixture__team-indicator {
+  position: relative; }
+  .fixture__team-indicator:after {
+    top: 50%;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-width: 6px;
+    margin-top: -6px; }
+  .fixture--live-session-header .fixture__team-indicator:after {
+    border-width: 8px;
+    margin-top: -8px; }
+
+.fixture__team-indicator--home {
+  position: relative; }
+  .fixture__team-indicator--home:after {
+    right: 100%;
+    border-right-color: #1169f6; }
+
+.fixture__team-indicator--away {
+  position: relative; }
+  .fixture__team-indicator--away:after {
+    left: 100%;
+    border-left-color: #1169f6; }
+
+.fixture__number--time,
+.fixture__number--inactive {
+  background-color: #dbdbdb;
+  color: #5a5a5a;
+  letter-spacing: normal; }
+  .fixture--live-session-header .fixture__number--time, .fixture--live-session-header
+  .fixture__number--inactive {
+    padding-right: 8px;
+    padding-left: 8px; }
+
+.fixture__number--abandoned,
+.fixture__number--post-event {
+  background-color: #ffdf43;
+  letter-spacing: normal; }
+  .fixture--live-session-header .fixture__number--abandoned, .fixture--live-session-header
+  .fixture__number--post-event {
+    padding-right: 8px;
+    padding-left: 8px; }
+
+.fixture__number--home {
+  margin-right: 1px; }
+  .fixture--live-session-header .fixture__number--home {
+    margin-right: 2px; }
+
+.fixture__flag--block-wrapper {
+  position: relative; }
+
+.fixture__flag--block {
+  display: block;
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 0;
+  margin-right: 0;
+  top: 100%; }
+
+.fixture__flag--block--home {
+  right: 0; }
+  .fixture__team--time .fixture__flag--block--home {
+    float: right; }
+
+.fixture__flag--block--away {
+  left: 0; }
+  .fixture__team--time .fixture__flag--block--away {
+    float: left; }
+
+.fixture__name--flag-block {
+  display: block; }
+
+.fixture__status,
+.fixture__win-message,
+.fixture__venue {
+  display: block;
+  margin-bottom: 4px; }
+
+.fixture__status {
+  color: #5a5a5a; }
+  .fixture--live-session-header .fixture__status {
+    color: #dbdbdb; }
+
+@media (min-width: 37.5em) {
+  .fixture__status--other-push-top {
+    margin-top: 24px; } }
+.fixture__status--ft {
+  color: #5a5a5a; }
+  .fixture--live-session-header .fixture__status--ft {
+    color: #ffdf43; }
+
+.fixture__status--live {
+  color: #1169f6; }
+
+.fixture__status--other {
+  display: block;
+  text-transform: none !important;
+  color: #5a5a5a; }
+
+.fixture__broadcaster {
+  display: block;
+  margin-top: 8px;
+  color: #5a5a5a; }
+
+.fixture__win-message {
+  color: #121212; }
+  .fixture--live-session-header .fixture__win-message {
+    color: #fff; }
+
+.fixture__venue {
+  color: #dbdbdb; }
+
+.fixture__venue--cricket-fixture {
+  color: #5a5a5a; }
+
+.fixture__venue-heading {
+  font-weight: bold; }
+
+.fixture__scorers {
+  padding-bottom: 16px;
+  line-height: 20px !important;
+  display: table-cell;
+  color: #dbdbdb;
+  width: 50%;
+  min-width: 75px; }
+  .fixture__scorers > li {
+    display: inline-block; }
+
+.fixture__scorers-home {
+  text-align: right; }
+
+.fixture__scorers-away {
+  text-align: left; }
+
+.fixture__status-wrapper {
+  min-width: 94px;
+  display: table-cell; }
+
+.fixture-events {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px; }
+
+.fixture-events__item {
+  width: 50%;
+  position: relative;
+  border-color: #dbdbdb;
+  border-style: solid;
+  padding-top: 4px;
+  padding-bottom: 4px; }
+
+.fixture-events__item--home {
+  text-align: right;
+  border-right-width: 1px;
+  padding-right: 8px; }
+
+.fixture-events__item--away {
+  text-align: left;
+  border-left-width: 1px;
+  left: 50%;
+  padding-left: 8px;
+  margin-left: -1px; }
+
+.fixture-events__min {
+  color: #5a5a5a; }
+
+/**
+* 1. Fallback background colour in case the background image doesn't load.
+* 2. Add text-shadow so white text is easy to read on light background images.
+* 3. Remove text-shadow on scores, live, result and time in fixture block.
+*/
+.match-overview-header {
+  background-size: cover;
+  background-position: center bottom;
+  background-color: #121212;
+  /* [1] */
+  margin-bottom: 8px;
+  padding-top: 24px;
+  padding-bottom: 16px;
+  text-shadow: 0px 0px 3px #333;
+  /* [2] */ }
+  @media (min-width: 37.5em) {
+    .match-overview-header {
+      margin-bottom: 16px; } }
+  .match-overview-header .fixture__block {
+    text-shadow: none;
+    /* [3] */ }
+
+.match-overview-header--football {
+  background-position: center top;
+  background-image: url(images/football-header-mobile.jpg); }
+  @media (min-width: 37.5em) {
+    .match-overview-header--football {
+      padding-top: 48px;
+      padding-bottom: 48px;
+      background-image: url(images/football-header-tablet.jpg); } }
+  @media (min-width: 56.25em) {
+    .match-overview-header--football {
+      background-image: url(images/football-header-desktop.jpg); } }
 
 /*# sourceMappingURL=main.css.map */

@@ -22,6 +22,8 @@ $sp-c-mist: #f7f7f5;
 $sp-c-sunglow: #fddd2c;
 $sp-c-earls-green: #c6af36;
 
+$sp-c-live-blue: #1169f6;
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -197,3 +199,587 @@ time, mark, audio, video {
         text-decoration: underline;
     }
 }
+
+
+/*------------------------------------*\
+    # FIXTURE
+\*------------------------------------*/
+
+$fixture-block-width: 28px;
+$fixture-block-width--session-header: 38px;
+
+/**
+* 1. Get around an overly specific font-size rule in Live
+*    which causes additional space between the fixture details
+*    and the live tag - this change has no effect on Onesport pages
+*/
+.fixture {
+    position: relative;
+
+    display: block;
+
+    text-align: center;
+    font-size: 15px; /* [1] */
+}
+
+.fixture--live-session-header {
+    color: $sp-c-white;
+
+    a {
+        color: $sp-c-white;
+    }
+}
+
+/**
+* 1. Hack to overide underline on cricket score
+*/
+.fixture__block-link {
+    display: block;
+
+    &:hover .fixture__team-name,
+    &:hover .fixture__team--time,
+    &:hover .fixture__team-name-trunc {
+        text-decoration: underline;
+        
+        .fixture__cricket-score {
+            text-decoration: none; /* [1] */
+            display: inline-block; /* [1] */
+            width: 100%; /* [1] */
+        }
+    }
+}
+
+
+.fixture__title {
+    text-align: left;
+    margin-bottom: $gel-spacing-unit;
+
+    .fixture--live-session-header & {
+        border-left: 1px solid $sp-c-mortar;
+        padding-left: $gel-spacing-unit;
+        margin-left: $gel-spacing-unit;
+        display: inline;
+    }
+}
+
+.fixture__title--center {
+    display: block;
+    text-align: center;
+    margin-bottom: halve($gel-spacing-unit);
+}
+
+.fixture__date {
+    display: block;
+    margin-bottom: halve($gel-spacing-unit);
+    color: $sp-c-mortar;
+    text-transform: uppercase;
+
+    .fixture--live-session-header & {
+        display: inline;
+        font-weight: bold !important;
+        color: $sp-c-white;
+    }
+}
+
+.fixture__date--left {
+    text-align: left;
+}
+
+@include mq($from: gel-bp-m) {
+    .fixture__date--long {
+        display: inline;
+    }
+
+    .fixture__date--short {
+        display: none;
+    }
+}
+
+.fixture_date-time-wrapper {
+    display: block;
+    margin-bottom: $gel-spacing-unit;
+    font-size: 0;
+}
+
+.fixture__date--long {
+    display: none;
+}
+
+.fixture__wrapper {
+    display: table;
+    width: 100%;
+
+    letter-spacing: -.31em;
+    font-size: 0;
+    margin-bottom: halve($gel-spacing-unit);
+
+    .fixture--live-session-header & {
+        margin-bottom: $gel-spacing-unit;
+
+        @if $enhanced {
+            @include mq($from: gel-bp-l) {
+                max-height: 38px;
+            }
+        }
+    }
+
+}
+
+.fixture__team {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+    letter-spacing: normal;
+    min-width: 75px;
+    color: $sp-c-black;
+
+    .fixture--stack & {
+        min-width: 0;
+    }
+
+    .fixture--live-session-header & {
+        color: $sp-c-white;
+    }
+}
+
+/**
+* 1. Push flags under teamname in IE.
+*/
+.fixture__team--time {
+    position: relative;
+
+    display: table-cell;
+    padding-top: halve($gel-spacing-unit);
+
+    .fixture--live-session-header & {
+        font-weight: normal !important;
+    }
+
+    .fixture__flag--block {
+        position: relative;
+        top: 0; /* [1] */
+    }
+}
+
+.fixture__team--away,
+.fixture__team--time-away {
+    direction: rtl;
+}
+
+.fixture__team-name {
+    display: table-cell;
+    width: 100%;
+
+    font-weight: bold !important;
+
+    vertical-align: middle;
+
+    .fixture--live-session-header & {
+        font-weight: normal !important;
+        vertical-align: bottom;
+    }
+}
+
+.fixture__team-name--home,
+.fixture__team--time-home {
+    text-align: right;
+    padding-right: $gel-spacing-unit;
+
+    .fixture--live-session-header & {
+        padding-right: 10px;
+    }
+}
+
+.fixture__team-name--away,
+.fixture__team--time-away {
+    text-align: left;
+    padding-left: $gel-spacing-unit;
+
+    .fixture--live-session-header & {
+        padding-left: 10px;
+    }
+}
+
+.fixture__team-name-wrap {
+    position: relative;
+
+    display: block;
+    min-height: 26px;
+
+    .fixture__team--time & {
+        min-height: 20px;
+    }
+
+    .fixture--live-session-header & {
+        min-height: 28px;
+    }
+}
+
+/**
+* Truncate the team name if the name extends beyond
+* the width of its parent
+*
+* 1. Line-height collapses so we need to set it to match the size
+*    of the fixture-block
+* 2. Reset the direction of the text
+*/
+.fixture__team-name-trunc {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    line-height: $fixture-block-width; /* [1] */
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .fixture__team--away &,
+    .fixture__team--time-away & {
+        direction: ltr; /* [2] */
+    }
+
+    .fixture__team--time-home &,
+    .fixture__team--time-away & {
+        line-height: 14px; /* [1] */
+    }
+
+    .fixture--live-session-header & {
+        line-height: 24px; /* [1] */
+    }
+}
+
+/**
+ * 1. IE is inheriting letter-spacing from its parent elements, where as
+ *    other browsers ignore this. We're just forcing the letter-spacing to
+ *    reset here.
+ */
+.fixture__block {
+    display: table-cell;
+
+    letter-spacing: normal; /* [1] */
+}
+
+.fixture__block--time {
+    min-width: 54px;
+    vertical-align: top;
+    line-height: double($gel-spacing-unit);
+}
+
+.fixture__number {
+    min-width: $fixture-block-width;
+
+    background-color: $sp-c-silver;
+    font-weight: bold !important;
+    text-align: center;
+    display: block;
+    padding-top: halve($gel-spacing-unit);
+    padding-bottom: halve($gel-spacing-unit);
+    color: $sp-c-black;
+
+    .fixture--live-session-header & {
+        min-width: $fixture-block-width--session-header;
+
+        padding-right: halve($gel-spacing-unit);
+        padding-left: halve($gel-spacing-unit);
+
+        line-height: double($gel-alt-spacing-unit);
+    }
+}
+
+.fixture__number--ft {
+    background-color: $sp-c-yellow;
+}
+
+.fixture__number--live {
+    background-color: $sp-c-live-blue;
+    color: $sp-c-white;
+}
+
+.fixture__team-indicator {
+    position: relative;
+
+    &:after {
+        top: 50%;
+        border: solid transparent;
+        content: '';
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-width: 6px;
+        margin-top: -6px;
+    }
+
+    .fixture--live-session-header & {
+        &:after {
+            border-width: 8px;
+            margin-top: -8px;
+        }
+    }
+}
+
+.fixture__team-indicator--home {
+    position: relative;
+
+    &:after {
+        right: 100%;
+        border-right-color: $sp-c-live-blue;
+    }
+}
+
+.fixture__team-indicator--away {
+    position: relative;
+
+    &:after {
+        left: 100%;
+        border-left-color: $sp-c-live-blue;
+    }
+}
+
+.fixture__number--time,
+.fixture__number--inactive {
+    background-color: $sp-c-silver;
+    color: $sp-c-mortar;
+    letter-spacing: normal;
+
+    .fixture--live-session-header & {
+        padding-right: $gel-spacing-unit;
+        padding-left: $gel-spacing-unit;
+    }
+}
+
+.fixture__number--abandoned,
+.fixture__number--post-event {
+    background-color: $sp-c-yellow;
+    letter-spacing: normal;
+
+    .fixture--live-session-header & {
+        padding-right: $gel-spacing-unit;
+        padding-left: $gel-spacing-unit;
+    }
+}
+
+.fixture__number--home {
+    margin-right: 1px;
+
+    .fixture--live-session-header & {
+        margin-right: 2px;
+    }
+}
+
+
+.fixture__flag--block-wrapper {
+    position: relative;
+}
+
+.fixture__flag--block {
+    display: block;
+    position: absolute;
+    margin-top: $gel-spacing-unit;
+    margin-left: 0;
+    margin-right: 0;
+    top: 100%;
+}
+
+.fixture__flag--block--home {
+    right: 0;
+
+    .fixture__team--time & {
+        float: right;
+    }
+}
+
+.fixture__flag--block--away {
+    left: 0;
+
+    .fixture__team--time & {
+        float: left;
+    }
+}
+
+.fixture__name--flag-block {
+    display: block;
+}
+
+.fixture__status,
+.fixture__win-message,
+.fixture__venue {
+    display: block;
+    margin-bottom: halve($gel-spacing-unit);
+}
+
+.fixture__status {
+    color: $sp-c-mortar;
+
+    .fixture--live-session-header & {
+        color: $sp-c-silver;
+    }
+}
+
+
+@include mq($from: gel-bp-m) {
+    .fixture__status--other-push-top {
+        margin-top: double($gel-alt-spacing-unit);
+    }
+}
+
+
+.fixture__status--ft {
+    color: $sp-c-mortar;
+
+    .fixture--live-session-header & {
+        color: $sp-c-yellow;
+    }
+}
+
+.fixture__status--live {
+    color: $sp-c-live-blue;
+}
+
+.fixture__status--other {
+    display: block;
+    text-transform: none !important;
+    color: $sp-c-mortar;
+}
+
+.fixture__broadcaster {
+    display: block;
+    margin-top: $gel-spacing-unit;
+    color: $sp-c-mortar;
+}
+
+.fixture__win-message {
+    color: $sp-c-black;
+
+    .fixture--live-session-header & {
+        color: $sp-c-white;
+    }
+}
+
+.fixture__venue {
+    color: $sp-c-silver;
+}
+
+.fixture__venue--cricket-fixture {
+    color: $sp-c-mortar;
+}
+
+.fixture__venue-heading {
+    font-weight: bold;
+}
+
+.fixture__scorers {
+    padding-bottom: double($gel-spacing-unit);
+    line-height: 20px !important;
+    display: table-cell;
+    color: $sp-c-silver;
+    width: 50%;
+    min-width: 75px;
+
+    
+    > li {
+        display: inline-block;
+    }
+    
+}
+
+.fixture__scorers-home {
+    text-align: right;
+}
+
+.fixture__scorers-away {
+    text-align: left;
+}
+
+.fixture__status-wrapper {
+    min-width: 94px;
+    display: table-cell;
+}
+
+.fixture-events {
+    padding-top: halve($gel-spacing-unit);
+    padding-bottom: halve($gel-spacing-unit);
+    margin-top: halve($gel-spacing-unit);
+    margin-bottom: halve($gel-spacing-unit);
+}
+
+.fixture-events__item {
+    width: 50%;
+    position: relative;
+    border-color: $sp-c-silver;
+    border-style: solid;
+    padding-top: halve($gel-spacing-unit);
+    padding-bottom: halve($gel-spacing-unit);
+}
+
+.fixture-events__item--home {
+    text-align: right;
+    border-right-width: 1px;
+    padding-right: $gel-spacing-unit;
+}
+
+.fixture-events__item--away {
+    text-align: left;
+    border-left-width: 1px;
+    left: 50%;
+    padding-left: $gel-spacing-unit;
+    margin-left: -1px;
+}
+
+.fixture-events__min {
+    color: $sp-c-mortar;
+}
+
+
+
+
+/**
+* 1. Fallback background colour in case the background image doesn't load.
+* 2. Add text-shadow so white text is easy to read on light background images.
+* 3. Remove text-shadow on scores, live, result and time in fixture block.
+*/
+
+.match-overview-header {
+    background-size: cover;
+    background-position: center bottom;
+
+    background-color: $sp-c-black; /* [1] */
+
+    margin-bottom: $gel-spacing-unit;
+
+    @if $enhanced {
+        @include mq($from: gel-bp-m) {
+            margin-bottom: double($gel-spacing-unit);
+        }
+    }
+
+    padding-top: $gel-spacing-unit * 3;
+    padding-bottom: double($gel-spacing-unit);
+
+    text-shadow: 0px 0px 3px #333; /* [2] */
+
+    .fixture__block {
+        text-shadow: none; /* [3] */
+    }
+}
+
+.match-overview-header--football {
+    background-position: center top;
+    background-image: url(images/football-header-mobile.jpg);
+
+    @include mq($from: gel-bp-m) {
+        padding-top: $gel-spacing-unit * 6;
+        padding-bottom: $gel-spacing-unit * 6;
+
+        background-image: url(images/football-header-tablet.jpg);
+    }
+
+    @include mq($from: gel-bp-l) {
+        background-image: url(images/football-header-desktop.jpg);
+    }
+}
+
+

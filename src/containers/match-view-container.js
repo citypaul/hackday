@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import PercentageBar from '../components/percentage-bar';
+import FlashText from '../components/flash-text';
 import jquery from 'jquery';
 import FootballHeader from '../components/header';
 
 const MatchViewContainer = React.createClass({
     getInitialState() {
         return {
+            events:  {
+                type: "",
+                text: ""
+            },
             scenarioIndex: 0,
             home: {
                 pressure: 50,
@@ -57,7 +62,7 @@ const MatchViewContainer = React.createClass({
                 <FootballHeader homeScore={this.state.home.score} awayScore={this.state.away.score} />
                 <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                leftValue={this.state.home.pressure} rightValue={this.state.away.pressure} />
-                <div className="flash-text flash"><p className="gel-pica">GOAL! Agüero 32"</p></div>
+                <FlashText type={this.state.events.type} text={this.state.events.text} />
 
             </div>
         );

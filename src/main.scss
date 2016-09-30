@@ -449,6 +449,7 @@ $fixture-block-width--session-header: 38px;
 
     .fixture--live-session-header & {
         line-height: 24px; /* [1] */
+        text-decoration: none;
     }
 }
 

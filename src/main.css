@@ -641,7 +641,8 @@ time, mark, audio, video {
     /* [1] */ }
   .fixture--live-session-header .fixture__team-name-trunc {
     line-height: 24px;
-    /* [1] */ }
+    /* [1] */
+    text-decoration: none; }
 
 /**
  * 1. IE is inheriting letter-spacing from its parent elements, where as

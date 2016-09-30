@@ -19,7 +19,7 @@ const Header = React.createClass({
                                 </span>
                             </span>
                             <span className="fixture__block">
-                                <span className="fixture__number fixture__number--home fixture__number--ft">{this.props.homeScore}</span>
+                                <span className="fixture__number fixture__number--home fixture__number--live">{this.props.homeScore}</span>
                             </span>
                         </span>
                         <span className="fixture__team gel-double-pica fixture__team--away">
@@ -31,32 +31,10 @@ const Header = React.createClass({
                                 </span>
                             </span>
                             <span className="fixture__block">
-                                <span className="fixture__number fixture__number--away fixture__number--ft">{this.props.awayScore}</span>
+                                <span className="fixture__number fixture__number--away fixture__number--live">{this.props.awayScore}</span>
                             </span>
                         </span>
                     </div>
-                    <aside>
-                        <ul className="fixture__scorers fixture__scorers-home gel-brevier">
-                            <li><span>Dembele</span> <span>(</span><span><span>3'</span> <span
-                                className="vh">minutes</span><span></span></span><span>,</span> <span><span>47'</span> <span
-                                className=
-                                    "vh">minutes</span><span></span></span><span>)</span><span>,&nbsp;</span></li>
-                            <li><span>Sterling</span> <span>(</span><span><span>20'</span> <span
-                                className="vh">minutes</span> <span>og</span></span><span>)</span><span></span></li>
-                        </ul><span className="fixture__status-wrapper"><span
-                        className="fixture__status fixture__status--ft gel-minion"><span></span><abbr title="Full Time">FT</abbr></span><span><span
-                        className=
-                            "fixture__status gel-brevier"><abbr
-                        title="Half Time">HT</abbr> <span></span><span>2</span><span>-</span><span>2</span></span></span><noscript></noscript></span>
-                        <ul className="fixture__scorers fixture__scorers-away gel-brevier">
-                            <li><span>Fernandinho</span> <span>(</span><span><span>11'</span> <span className="vh">minutes</span><span></span></span><span>)</span><span>,&nbsp;</span>
-                            </li>
-                            <li><span>Sterling</span> <span>(</span><span><span>28'</span> <span
-                                className="vh">minutes</span><span></span></span><span>)</span><span>,&nbsp;</span></li>
-                            <li><span>Nolito</span> <span>(</span><span><span>55'</span> <span
-                                className="vh">minutes</span><span></span></span><span>)</span><span></span></li>
-                        </ul>
-                    </aside>
                 </section>
             </div>
         )

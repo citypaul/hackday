@@ -206,10 +206,6 @@ const SnapshotGenerator = React.createClass({
                 </table>
                 {this.generateEventInfoRow('type')}
                 {this.generateEventInfoRow('text')}
-                <div>
-                    <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
-                                   leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>
-                </div>
             </div>
         );
     }

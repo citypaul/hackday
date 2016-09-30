@@ -10,28 +10,30 @@ const Header = React.createClass({
                         <span className="fixture__title gel-minion">Champions League -Group C</span>
                     </div>
                     <div className="fixture__wrapper">
-            <span className="fixture__team gel-double-pica fixture__team--home">
-                <span className="fixture__team-name fixture__team-name--home">
-                    <span className="fixture__team-name-wrap">
-                        <abbr className="abbr-on fixture__team-name-trunc medium-abbr-off" title="Celtic">
-                            <span>Celtic</span>
-                        </abbr>
-                    </span>
-                </span>
-                <span className="fixture__block">
-                    <span className="fixture__number fixture__number--home fixture__number--ft">3</span>
-                </span>
-            </span>
-            <span className="fixture__team gel-double-pica fixture__team--away">
-                <span className="fixture__team-name fixture__team-name--away">
-                    <span className="fixture__team-name-wrap">
-                        <abbr className="abbr-on fixture__team-name-trunc medium-abbr-off" title="Manchester City">
-                            <span>Man City</span>
-                        </abbr>
-                    </span>
-                </span>
-                <span className="fixture__number fixture__number--away fixture__number--ft">3</span>
-            </span>
+                        <span className="fixture__team gel-double-pica fixture__team--home">
+                            <span className="fixture__team-name fixture__team-name--home">
+                                <span className="fixture__team-name-wrap">
+                                    <abbr className="abbr-on fixture__team-name-trunc medium-abbr-off" title="Celtic">
+                                        <span>Celtic</span>
+                                    </abbr>
+                                </span>
+                            </span>
+                            <span className="fixture__block">
+                                <span className="fixture__number fixture__number--home fixture__number--ft">3</span>
+                            </span>
+                        </span>
+                        <span className="fixture__team gel-double-pica fixture__team--away">
+                            <span className="fixture__team-name fixture__team-name--away">
+                                <span className="fixture__team-name-wrap">
+                                    <abbr className="abbr-on fixture__team-name-trunc medium-abbr-off" title="Manchester City">
+                                        <span>Man City</span>
+                                    </abbr>
+                                </span>
+                            </span>
+                            <span className="fixture__block">
+                                <span className="fixture__number fixture__number--away fixture__number--ft">3</span>
+                            </span>
+                        </span>
                     </div>
                     <aside>
                         <ul className="fixture__scorers fixture__scorers-home gel-brevier">

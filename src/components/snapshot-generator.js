@@ -1,7 +1,7 @@
 import React from 'react';
 import PercentageBar from './percentage-bar';
-import { merge, reduce, map, pick } from 'lodash';
-import $ from 'jquery';
+import jquery from 'jquery';
+import { merge, reduce, map, pick, capitalize } from 'lodash';
 
 const SnapshotGenerator = React.createClass({
     getInitialState() {
@@ -114,6 +114,16 @@ const SnapshotGenerator = React.createClass({
         };
     },
 
+    changeExtrasValue(event) {
+        const name = event.target.name;
+        const val = event.target.value;
+        const updatedEventObj = {events: {[name]: event.target.value}};
+        const newState = merge({}, this.state, updatedEventObj);
+        this.setState(newState);
+        this.props.onUpdate(newState);
+
+    },
+
     generateTableRow(action) {
         return (
             <tr>
@@ -142,33 +152,13 @@ const SnapshotGenerator = React.createClass({
             </tr>
         );
     },
-
-    saveEvent() {
-    var actionName = $('#action_name').val();
-    var actionMinute = $('#minute_name').val();
-    $('#action_name').val("");
-    $('#action_text').val("");
-        this.setState(
-            {
-                events: {
-                     type: actionName,
-                     text: actionMinute
-                }
-            }
-        );
-    console.log("state", this.state);
-    },
-
-    generateTableRowForEvent() {
+    generateEventInfoRow(value) {
         return (
-            <div>
-                <label>Event Type:</label>
-                <input id="action_name" type="text"/>
-                <label>Event Text:</label>
-                <input id="action_text"type="text"/>
-                <button type="button" onClick={this.saveEvent}>SAVE EVENT</button>
+             <div>
+                <span>{ capitalize(value) }: </span>
+                <input type="text" name={value} onChange={this.changeExtrasValue} /><br />
             </div>
-            );
+        );
     },
 
     generateTableBody() {
@@ -215,6 +205,8 @@ const SnapshotGenerator = React.createClass({
                     </thead>
                     {this.generateTableBody()}
                 </table>
+                {this.generateEventInfoRow('type')}
+                {this.generateEventInfoRow('text')}
                 <div>
                     <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
                                    leftValue={this.state.totals.home} rightValue={this.state.totals.away}/>

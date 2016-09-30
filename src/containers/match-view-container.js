@@ -19,7 +19,8 @@ const MatchViewContainer = React.createClass({
             away: {
                 pressure: 50,
                 score: 0
-            }
+            },
+            statusIndicator: "level"
         }
     },
 
@@ -41,7 +42,8 @@ const MatchViewContainer = React.createClass({
                     events: {
                         type: data.events.type,
                         text: data.events.text
-                    }
+                    },
+                    statusIndicator: data.statusIndicator
                 })
             }.bind(this),
             error: function (err) {
@@ -54,15 +56,16 @@ const MatchViewContainer = React.createClass({
     },
 
     componentDidMount() {
-        setInterval(this.requestData, 1000);
+        setInterval(this.requestData, 2000);
     },
 
     render() {
         return (
             <div>
                 <FootballHeader homeScore={this.state.home.score} awayScore={this.state.away.score} />
-                <PercentageBar leftLabel="Home: " rightLabel="Away: " percentage={true}
-                               leftValue={this.state.home.pressure} rightValue={this.state.away.pressure} />
+                <PercentageBar leftLabel="Home: " rightLabel="Away: " heading={"Pressure"} percentage={true}
+                               leftValue={this.state.home.pressure} rightValue={this.state.away.pressure}
+                    statusIndicator={this.state.statusIndicator} />
                 <FlashText type={this.state.events.type} text={this.state.events.text} />
 
             </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-const percentagerowvalue = React.createClass({
+const PercentageRowValue = React.createClass({
     displayName: 'PercentageRowValue',
 
     getDefaultProps: function() {
@@ -30,4 +30,4 @@ render: function () {
 }
 });
 
-export default percentagerowvalue;
+export default PercentageRowValue;

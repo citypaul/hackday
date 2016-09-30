@@ -16,6 +16,6 @@
     "gel-sass-tools": "git@github.com:bbc/gel-sass-tools.git#^1.2.0",
     "gel-typography": "git@github.com:bbc/gel-typography.git#^2.0.3",
     "normalize-css": "git@github.com:necolas/normalize.css.git#^4.2.0",
-    "sass-mq": "git@github.com:bbc/sass-mq.git#^3.2.9"
+    "sass-mq": "git@github.com:sass-mq/sass-mq.git#^3.2.9"
   }
 }

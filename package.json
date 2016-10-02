@@ -58,10 +58,12 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "chart.js": "^2.3.0",
     "classnames": "^2.2.5",
     "jquery": "3.1.1",
     "lodash": "^4.16.1",
     "react": "^15.3.2",
+    "react-chartjs": "^0.8.0",
     "react-dom": "^15.3.2",
     "react-router": "^2.8.1",
     "request": "2.75.0"
